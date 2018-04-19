@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lang/class.js"></script>
+    <!--<script src="../lang/klass.js"></script>-->
+</head>
+<body>
+<script>
+    var Person = Class.create({
+        initialize: function (name) {
+            this.name = name;
+        },
+        getName: function () {
+            console.log("My name is " + this.name)
+        }
+    })
+
+    var japanese = Class.create(Person, {
+        initialize: function ($super, name, addr) {
+            $super(name);
+            this.addr = addr;
+        },
+        getName: function ($super) {
+          // $super(this.name);
+          console.log(this.name);
+        },
+        getAddr: function () {
+            console.log(this.addr)
+        }
+    })
+    var japan = new japanese('woda kaka', 'japanese');
+    japan.getName();
+    japan.getAddr();
+</script>
+</body>
+</html>
