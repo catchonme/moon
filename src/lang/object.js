@@ -11,6 +11,7 @@
        NUMBER_CLASS = '[object Number]',
        STRING_CLASS = '[object String]',
        ARRAY_CLASS = '[object Array]',
+       OBJECT_CLASS = '[object Object]',
        DATE_CLASS = '[object Date]';
 
    function Type(o) {
@@ -27,9 +28,32 @@
        return OBJECT_TYPE;
    }
 
+    /**
+     * 浅复制
+     * @param destination
+     * @param source
+     * @returns {*}
+     */
    function extend(destination, source) {
        for (var property in source)
            destination[property] = source[property]
+       return destination;
+   }
+
+    /**
+     * 深复制
+     * @param destination
+     * @param source
+     * @returns {*}
+     */
+   function deepClone(destination, source) {
+       for (var property in source) {
+           if (_toString.call(source[property]) === ARRAY_CLASS || _toString.call(source[property]) === OBJECT_CLASS) {
+               destination[property] = deepClone({}, source[property])
+           } else {
+               destination[property] = source[property]
+           }
+       }
        return destination;
    }
 
@@ -40,12 +64,24 @@
        return result;
    }
 
+   function isEmpty(object) {
+       for (var property in object) {
+           if (object[property])
+               return false;
+       }
+       return true;
+   }
+
    function isUndefined(object) {
        return typeof object === UNDEFINED_TYPE;
    }
 
    extend(Object, {
        values: values,
+       extend: extend,
+       clone: extend,
+       deepClone: deepClone,
+       isEmpty: isEmpty,
        isUndefined: isUndefined
    })
 })()
