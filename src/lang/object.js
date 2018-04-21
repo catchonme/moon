@@ -27,9 +27,25 @@
        return OBJECT_TYPE;
    }
 
+   function extend(destination, source) {
+       for (var property in source)
+           destination[property] = source[property]
+       return destination;
+   }
 
+   function values(object) {
+       var result = [];
+       for (var property in object)
+           result.push(object[property]);
+       return result;
+   }
 
+   function isUndefined(object) {
+       return typeof object === UNDEFINED_TYPE;
+   }
 
-
-
+   extend(Object, {
+       values: values,
+       isUndefined: isUndefined
+   })
 })()
