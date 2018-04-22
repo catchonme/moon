@@ -29,7 +29,25 @@
         return this[this.length - 1];
     }
 
-    function flatten() {
-        return
+    /**
+     * 使用 ES6的reduce方法更便捷
+     * const flatten = arr => arr.reduce((a,b) => a.concat(Array.isArray(b) ? flatten(b) : b), []);
+     * @param arr
+     * @returns {Array}
+     */
+    function flatten(arr) {
+        var result = [];
+        function flattenRecursive(array) {
+            for (var i=0, length=array.length; i< length; i++) {
+                if (Array.isArray(array[i])) {
+                    flattenRecursive(array[i])
+                } else {
+                    result.push(array[i]);
+                }
+            }
+        }
+        flattenRecursive(arr);
+        return result;
     }
+
 })()
