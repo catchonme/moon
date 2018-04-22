@@ -1,5 +1,6 @@
 (function () {
-    var STRING_CLASS = '[object String]';
+    var _slice = Object.prototype.slice,
+        STRING_CLASS = '[object String]';
 
     /**
      * 因为 typeof new String('foo') === 'object'
@@ -8,6 +9,6 @@
      * @returns {boolean}
      */
     function isString(object) {
-        return typeof object === STRING_CLASS;
+        return _slice.call(object) === STRING_CLASS;
     }
 })
