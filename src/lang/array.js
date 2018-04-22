@@ -16,14 +16,6 @@
         return this;
     }
 
-    function first() {
-        return this[0];
-    }
-
-    function last() {
-        return this[this.length - 1];
-    }
-
     /**
      * 使用 ES6的reduce方法更便捷
      * const flatten = arr => arr.reduce((a,b) => a.concat(Array.isArray(b) ? flatten(b) : b), []);

@@ -1,7 +1,4 @@
 (function () {
-    var DATE_CLASS = '[object Date]';
 
-    function isDate(object) {
-        return Object.prototype.toString.call(object) === DATE_CLASS;
-    }
-})
+    // 参考 https://github.com/noahlam/Miment
+})()

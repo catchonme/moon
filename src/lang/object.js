@@ -1,5 +1,6 @@
 (function () {
    var _toString = Object.prototype.toString,
+       _slice = Object.prototype.slice,
        NULL_TYPE = 'null',
        UNDEFINED_TYPE = 'undefined',
        BOOLEAN_TYPE = 'boolean',
@@ -76,12 +77,32 @@
        return typeof object === UNDEFINED_TYPE;
    }
 
+    function isFunction(object) {
+        return Object.prototype.toString.call(object) === FUNCTION_CLASS;
+    }
+
+    function isDate(object) {
+        return Object.prototype.toString.call(object) === DATE_CLASS;
+    }
+
+    function isNumber(object) {
+        return Object.prototype.toString.call(object) === NUMBER_CLASS;
+    }
+
+    function isString(object) {
+        return _slice.call(object) === STRING_CLASS;
+    }
+
    extend(Object, {
        values: values,
        extend: extend,
        clone: extend,
        deepClone: deepClone,
        isEmpty: isEmpty,
-       isUndefined: isUndefined
+       isUndefined: isUndefined,
+       isFunction: isFunction,
+       isDate: isDate,
+       isNumber: isNumber,
+       isString: isString
    })
 })()
