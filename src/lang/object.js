@@ -77,16 +77,20 @@
        return typeof object === UNDEFINED_TYPE;
    }
 
+   function isBoolean(object) {
+       return _toString.call(object) === BOOLAEN_CLASS;
+   }
+
     function isFunction(object) {
-        return Object.prototype.toString.call(object) === FUNCTION_CLASS;
+        return _toString.call(object) === FUNCTION_CLASS;
     }
 
     function isDate(object) {
-        return Object.prototype.toString.call(object) === DATE_CLASS;
+        return _toString.call(object) === DATE_CLASS;
     }
 
     function isNumber(object) {
-        return Object.prototype.toString.call(object) === NUMBER_CLASS;
+        return _toString.call(object) === NUMBER_CLASS;
     }
 
     function isString(object) {
@@ -100,6 +104,7 @@
        deepClone: deepClone,
        isEmpty: isEmpty,
        isUndefined: isUndefined,
+       isBoolean: isBoolean,
        isFunction: isFunction,
        isDate: isDate,
        isNumber: isNumber,
