@@ -19,8 +19,57 @@
         })
     }
 
+    function interpret(str) {
+        return str == null ? '' : String(str);
+    }
+
+    function gsub(pattern, replacement) {
+        var result = '', source = this, match;
+        replacement = prepareReplacement(replacement);
+
+        if (Object.isString(pattern)) {
+            pattern = RegExp.escape(pattern);
+        }
+
+        if (!(pattern.length || isNonEmptyRegExp(pattern))) {
+            replacement = replacement('');
+            return replacement + source.split('').join(replacement) + replacement;
+        }
+
+        while(source.length > 0) {
+            match = source.match(pattern)
+            if (match && match[0].length > 0) {
+                result += source.slice(0, match.index);
+                result += String.interpret(replacement(match));
+                source = source.slice(match.index + match[0].length);
+            } else {
+                result += source, source = '';
+            }
+        }
+        return result;
+    }
+
+    function prepareReplacement(replacement) {
+        if (Object.isFunction(replacement)) {
+            return replacement;
+        }
+
+        return function(match) {
+            return new Template(replacement, match);
+        }
+    }
+
+    // In some versions of Chrome, an empty RegExp has "(?:)" as a `source`
+    // property instead of an empty string.
+    function isNonEmptyRegExp(regexp) {
+        return regexp.source && regexp.source !== '(?:)';
+    }
+
     Object.extend(String, {
         camelize: camelize,
-        uncamelize: uncamelize
+        uncamelize: uncamelize,
+        capitalize: capitalize,
+        interpret: interpret,
+        gsub: gsub,
     })
 })()

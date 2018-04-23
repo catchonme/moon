@@ -117,6 +117,36 @@
     function getHeight(element) {
         return getDimensions(element).height;
     }
+
+    /**
+     * scrollTo(element) 跳转到该元素位置
+     * @param element
+     * @returns {*}
+     */
+    function scrollTo(element) {
+        var pos = cumulativeOffset(element);
+        window.scrollTo(pos.left, pos.top);
+        return element;
+    }
+
+    /**
+     * Returns the offsets of `element` from the top left corner of the document.
+     *
+     * @param element
+     * @returns {{top: number, left: number}}
+     */
+    function cumulativeOffset(element) {
+        element = $(element);
+        var valueTop = 0, valueLeft = 0;
+        if (element.parentNode) {
+            do {
+                valueTop += element.offsetTop || 0;
+                valueLeft += element.offsetLeft || 0;
+                element = element.offsetParent;
+            } while (element);
+        }
+        return { top: valueTop, left: valueLeft}
+    }
 })();
 
 (function() {

@@ -17,6 +17,18 @@
         return !!(object && object.nodeType == ELEMENT_NODE)
     }
 
+    function isBody(element) {
+        return element.nodeName.toUpperCase() === 'BODY';
+    }
+
+    function isHTML(element) {
+        return element.nodeName.toUpperCase() === 'HTML';
+    }
+
+    function isDocument(element) {
+        return element.nodeType === DOCUMENT_NODE;
+    }
+
     function $(element) {
         if (arguments.length > 1) {
             for (var i=0, elements = [], length=arguments.length; i<length; i++) {

@@ -8,7 +8,7 @@
        STRING_TYPE = 'string',
        OBJECT_TYPE = 'object',
        FUNCTION_CLASS = '[object Function]',
-       BOOLAEN_CLASS = '[object Boolean]',
+       BOOLEAN_CLASS = '[object Boolean]',
        NUMBER_CLASS = '[object Number]',
        STRING_CLASS = '[object String]',
        ARRAY_CLASS = '[object Array]',
@@ -27,6 +27,10 @@
            case 'string' : return STRING_TYPE;
        }
        return OBJECT_TYPE;
+   }
+
+   function clone(object) {
+       return extend({ }, object);
    }
 
     /**
@@ -78,7 +82,11 @@
    }
 
    function isBoolean(object) {
-       return _toString.call(object) === BOOLAEN_CLASS;
+       return _toString.call(object) === BOOLEAN_CLASS;
+   }
+
+   function isObject(object) {
+       return _toString.call(object) === OBJECT_CLASS;
    }
 
     function isFunction(object) {
@@ -97,17 +105,86 @@
         return _slice.call(object) === STRING_CLASS;
     }
 
+    function toQueryString(object) {
+       var result = [];
+       Object.keys(object).forEach(function (value, key) {
+           key = encodeURIComponent(key), values = value;
+
+           if (values && typeof values == 'object') {
+               if (Array.isArray(values)) {
+                   var queryValues = [];
+                   for (var i = 0, length = value.length; i < length; i++) {
+                       value = values[i];
+                       queryValues.push(toQueryPair(key, value));
+                   }
+                   result.push(queryValues)
+               }
+           } else {
+               result.push(toQueryPair(key, values));
+           }
+       })
+        return result.join('&');
+    }
+
+    function toQueryPair(key, value) {
+       if (isUndefined(value)) return key;
+
+       value = String.interpolate(value);
+
+        // Normalize newlines as \r\n because the HTML spec says newlines should
+        // be encoded as CRLFs.
+       value = value.gsub(/(\r)?\n/, '\r\n');
+       value = encodeURIComponent(value);
+        // Likewise, according to the spec, spaces should be '+' rather than
+        // '%20'.
+       value = value.gsub(/%20/, '+');
+       return key + '=' + value;
+    }
+
+    function toQueryParams(separator) {
+        var match = this.strip().match(/([^?#]*)(#.*)?$/);
+        if (!match) return { };
+
+        var result = {};
+        match[1].split(separator || '&').forEach(function (item) {
+            var param = item.split('=');
+            var key = decodeURIComponent(param[0]),
+                value = decodeURIComponent(param[1]);
+
+            if (value != undefined) {
+                value = value.gsub('+', ' ');
+                value = decodeURIComponent(value);
+            }
+
+            if (key in result) {
+                if (!Array.isArray(result[key])) {
+                    result[key] = [result[key]];
+                    result[key].push(value);
+                } else {
+                    result[key] = value;
+                }
+            }
+        });
+
+        return result;
+    }
+
    extend(Object, {
        values: values,
        extend: extend,
-       clone: extend,
+       clone: clone,
        deepClone: deepClone,
+       toTemplateReplacements: clone, // template 中使用
        isEmpty: isEmpty,
        isUndefined: isUndefined,
        isBoolean: isBoolean,
+       isObject: isObject,
        isFunction: isFunction,
        isDate: isDate,
        isNumber: isNumber,
-       isString: isString
+       isString: isString,
+       toQueryString: toQueryString,
+       toQueryPair: toQueryPair,
+       toQueryParams: toQueryParams
    })
 })()
