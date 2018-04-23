@@ -3,17 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        #pid {
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
 <div>
-    <p>333</p>
+    <p id="pid">333</p>
 </div>
 <script>
-   var p = document.getElementsByTagName('p')[0];
-   var span = document.createElement('span')
-   p.replaceWith(span);
+   function getStyle(element, name) {
+       element = document.querySelector(element);
+       if (element.style[name]) {
+           log(1)
+           return element.style[name];
+       } else if (element.currentStyle) {
+           log(2)
+           return element.currentStyle[name];
+       } else if (document.defaultView && document.defaultView.getComputedStyle) {
 
-   log(document.getElementsByTagName('div')[0])
+           var style = document.defaultView.getComputedStyle(element);
+           return style.getPropertyValue(name);
+       } else {
+           return null;
+       }
+   }
+
+   function camelize(str) {
+       return str.replace(/([A-Z])/g, "-$1");
+   }
+
+   function uncamelize(str) {
+       return str.replace(/([a-z])([A-Z])/g, function(strMatch, p1, p2) {
+
+           return p1 + '-' + p2.toLowerCase();
+       })
+   }
+
+   function setStyle(element, styles) {
+       for (var property in styles) {
+           if (element.style.setProperty) {
+               element.style.setProperty(uncamelize(property), styles[property], null)
+           } else {
+               element.style[camelize(property)] = styles[property]
+           }
+       }
+   }
+
+
+
+   var ele = document.getElementById('pid');
+   var styles = {
+       // fontWeight: 800,
+       textAlign: 'center'
+   }
+   setStyle(ele, styles)
 
    function log() {
        console.log.apply(console, arguments)

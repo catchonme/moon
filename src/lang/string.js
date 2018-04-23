@@ -12,4 +12,9 @@
             return p1 + sep + p2.toLowerCase();
         })
     }
+
+    Object.extend(String, {
+        camelize: camelize,
+        uncamelize: uncamelize
+    })
 })()
