@@ -58,4 +58,6 @@
             node.detachEvent("on"+type, handler)
         }
     }
+
+    // 用户自定义事件绑定
 })()

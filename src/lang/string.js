@@ -13,6 +13,12 @@
         })
     }
 
+    function capitalize(str) {
+        return str.replace(/\b[a-z]/g, function(strMatch) {
+            return match.toUpperCase();
+        })
+    }
+
     Object.extend(String, {
         camelize: camelize,
         uncamelize: uncamelize

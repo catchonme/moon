@@ -7,59 +7,21 @@
         #pid {
             font-size: 16px;
         }
+        #demo {
+            position: relative;
+        }
     </style>
 </head>
 <body>
-<div>
+<div id="demo">
     <p id="pid">333</p>
+    <p class="pid">43434</p>
+    <p class="pid">43434</p>
 </div>
 <script>
-   function getStyle(element, name) {
-       element = document.querySelector(element);
-       if (element.style[name]) {
-           log(1)
-           return element.style[name];
-       } else if (element.currentStyle) {
-           log(2)
-           return element.currentStyle[name];
-       } else if (document.defaultView && document.defaultView.getComputedStyle) {
 
-           var style = document.defaultView.getComputedStyle(element);
-           return style.getPropertyValue(name);
-       } else {
-           return null;
-       }
-   }
-
-   function camelize(str) {
-       return str.replace(/([A-Z])/g, "-$1");
-   }
-
-   function uncamelize(str) {
-       return str.replace(/([a-z])([A-Z])/g, function(strMatch, p1, p2) {
-
-           return p1 + '-' + p2.toLowerCase();
-       })
-   }
-
-   function setStyle(element, styles) {
-       for (var property in styles) {
-           if (element.style.setProperty) {
-               element.style.setProperty(uncamelize(property), styles[property], null)
-           } else {
-               element.style[camelize(property)] = styles[property]
-           }
-       }
-   }
-
-
-
-   var ele = document.getElementById('pid');
-   var styles = {
-       // fontWeight: 800,
-       textAlign: 'center'
-   }
-   setStyle(ele, styles)
+    var pid = document.querySelector('.pid');
+    log(pid.offsetParent);
 
    function log() {
        console.log.apply(console, arguments)
