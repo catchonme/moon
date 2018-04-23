@@ -5,9 +5,20 @@
     <title>Title</title>
 </head>
 <body>
+<div>
+    <p>333</p>
+</div>
 <script>
-    var bool = new Boolean(1);
-    console.log(typeof bool)
+   var p = document.getElementsByTagName('p')[0];
+   var span = document.createElement('span')
+   p.replaceWith(span);
+
+   log(document.getElementsByTagName('div')[0])
+
+   function log() {
+       console.log.apply(console, arguments)
+   }
+
 </script>
 </body>
 </html>
