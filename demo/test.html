@@ -22,7 +22,7 @@
         name: 'wallen'
     }
     Ajax.request(pqURL, {
-        method: 'get',
+        method: 'post',
         parameters:  pqParams,
         onSuccess: function (transport) {
             var response = transport.responseText || "no response text";
@@ -42,10 +42,14 @@
             var key = value, values = params[value];
                 param.push(key +'='+ values);
         })
-        url = url + '?' + param.join('&');
-        console.log(url)
-        xhr.open('GET', url)
-        xhr.send();
+
+        var paramData = param.join('&');
+
+        // url = url + '?' + param.join('&');
+        // console.log(url)
+        xhr.open('POST', url)
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send(paramData);
         xhr.onload = function(){
             console.log(xhr.status);
             console.log(xhr.statusText);

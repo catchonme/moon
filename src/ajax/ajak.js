@@ -51,7 +51,6 @@ Object.prototype.toQueryParams = function (params) {
 }
 
 Object.prototype.toQueryString = function (object) {
-    console.log(object)
     var result = [];
     Object.keys(object).forEach(function (value, key) {
         key = encodeURIComponent(value), values = object[value];
@@ -127,12 +126,32 @@ var Ajax = {
 
         try {
             this.transport.open(this.method.toUpperCase(), this.url, this.options.asynchronous);
+            this.transport.onreadystatechange = this.onStateChange.bind(this);
+            this.setRequestHeaders();
             this.body = this.method == 'post' ? (this.options.postBody || params) : null;
             this.transport.send(this.body);
-            this.transport.onreadystatechange = this.onStateChange.bind(this);
         } catch (e) {
             console.log(e)
         }
+    },
+    setRequestHeaders: function(){
+        var headers = {
+            'Accept': 'text/javascript, text/html, application/xml, text/xml, */*'
+        };
+
+        if (this.method == 'post') {
+            headers['Content-type'] = this.options.contentType +
+                (this.options.encoding ? '; charset=' + this.options.encoding : '');
+        }
+
+        /* 测试使用 */
+        this.transport.setRequestHeader('Accept', 'text/javascript, text/html, application/xml, text/xml, */*');
+        this.transport.setRequestHeader('Content-type', "application/x-www-form-urlencoded; charset:UTF-8");
+
+        /* 正常是按照此用法， 但是此时会把最上面的给 Object 的方法也设置到 setRequestheader 中，所以会出现问题*/
+        /*for (var name in headers) {
+            this.transport.setRequestHeader(name, headers[name]);
+        }*/
     },
     onStateChange: function() {
         var readyState = this.transport.readyState;
