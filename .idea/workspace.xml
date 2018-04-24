@@ -17,22 +17,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="test.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/demo/test.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="34" column="32" lean-forward="true" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
+            <state relative-caret-position="330">
+              <caret line="25" column="30" lean-forward="true" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ajak.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ajak.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ajax/ajak.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="175" column="42" lean-forward="true" selection-start-line="175" selection-start-column="42" selection-end-line="175" selection-end-column="42" />
-              <folding />
+            <state relative-caret-position="1942">
+              <caret line="166" column="13" lean-forward="true" selection-start-line="166" selection-start-column="13" selection-end-line="166" selection-end-column="13" />
+              <folding>
+                <element signature="e#112#158#0" expanded="false" />
+                <element signature="e#199#243#0" expanded="false" />
+                <element signature="e#302#411#0" expanded="false" />
+                <element signature="e#459#534#0" expanded="false" />
+                <element signature="e#1344#2021#0" expanded="false" />
+                <element signature="e#2075#2342#0" expanded="false" />
+                <element signature="e#2392#2436#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -229,12 +237,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1524528679809</updated>
-      <workItem from="1524528681950" duration="9922000" />
+      <workItem from="1524528681950" duration="10719000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9922000" />
+    <option name="totallyTimeSpent" value="10719000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
@@ -344,19 +352,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ajax/ajak.js">
+    <entry file="file://$PROJECT_DIR$/demo/test.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="175" column="42" lean-forward="true" selection-start-line="175" selection-start-column="42" selection-end-line="175" selection-end-column="42" />
+        <state relative-caret-position="330">
+          <caret line="25" column="30" lean-forward="true" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/demo/test.html">
+    <entry file="file://$PROJECT_DIR$/src/ajax/ajak.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="34" column="32" lean-forward="true" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
-          <folding />
+        <state relative-caret-position="1942">
+          <caret line="166" column="13" lean-forward="true" selection-start-line="166" selection-start-column="13" selection-end-line="166" selection-end-column="13" />
+          <folding>
+            <element signature="e#112#158#0" expanded="false" />
+            <element signature="e#199#243#0" expanded="false" />
+            <element signature="e#302#411#0" expanded="false" />
+            <element signature="e#459#534#0" expanded="false" />
+            <element signature="e#1344#2021#0" expanded="false" />
+            <element signature="e#2075#2342#0" expanded="false" />
+            <element signature="e#2392#2436#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

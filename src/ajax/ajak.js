@@ -3,7 +3,7 @@
  * @param str
  * @returns {string}
  */
-
+/* 依赖函数 */
 String.prototype.interpret = function(str) {
     return str == null ? '' : String(str);
 }
@@ -87,7 +87,7 @@ Object.prototype.isUndefined = function(object) {
     return typeof object == 'undefined';
 }
 
-
+/* Ajax 主体 */
 var Ajax = {
     initialize: function (url, options) {
         this.options = {
@@ -101,7 +101,8 @@ var Ajax = {
         };
         Object.extend(this.options, options || {});
         this.events = ['Uninitialized', 'loading', 'Loaded', 'Interactive', 'Complete'];
-        this.options.method = this.options.method.toLowerCase();
+        this.url = url;
+        this.method = this.options.method = this.options.method.toLowerCase();
         this.transport = this.getTransport();
     },
     getTransport: function() {
@@ -109,8 +110,6 @@ var Ajax = {
     },
     request: function(url, options) {
         this.initialize(url, options);
-        this.url = url;
-        this.method = this.options.method;
         var params = Object.isString(this.options.parameters) ?
             this.options.parameters :
             Object.toQueryString(this.options.parameters);
@@ -135,6 +134,22 @@ var Ajax = {
             console.log(e)
         }
     },
+    onStateChange: function() {
+        var readyState = this.transport.readyState;
+        if (readyState > 1) {
+            this.respondToReadyState(this.transport.readyState);
+        }
+    },
+    respondToReadyState: function(readyState) {
+        var state = this.events[readyState], response = this.response();
+        if (state == 'Complete') {
+            try {
+                this.options['on' + (this.success() ? 'Success' : 'Failure')](response)
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    },
     response: function() {
         var readyState = this.transport.readyState;
         if (readyState == 4) {
@@ -148,10 +163,13 @@ var Ajax = {
             }
         }
     },
-    onStateChange: function() {
-        var readyState = this.transport.readyState;
-        if (readyState > 1) {
-            this.respondToReadyState(this.transport.readyState);
+    getStatus: function() {
+        try {
+            // IE sometimes returns 1223 for a 204 response
+            if (this.transport.status === 1223) return 204;
+            return this.transport.status || 0;
+        } catch (e) {
+            return 0;
         }
     },
     getStatusText: function(){
@@ -167,32 +185,6 @@ var Ajax = {
     success: function() {
         var status = this.getStatus();
         return !status || (status >= 200 && status < 300) || status == 304;
-    },
-    respondToReadyState: function(readyState) {
-        var state = this.events[readyState], response = this.response();
-        if (state == 'Complete') {
-            try {
-                console.log(response)
-                console.log('-----------')
-                // var object = {response['status'], response.statusText, response.responseText}
-                this.options['on' + (this.success() ? 'Success' : 'Failure')](response)
-                /* (this.options['on' + response.status]
-                     || this.options['on' + (this.success() ? 'Success' : 'Failure')]
-                     || Function.emptyFunction)(response, response.headerJSON);*/
-            } catch (e) {
-                // this.dispatchEvent(e)
-                console.log(e);
-            }
-        }
-    },
-    getStatus: function() {
-        try {
-            // IE sometimes returns 1223 for a 204 response
-            if (this.transport.status === 1223) return 204;
-            return this.transport.status || 0;
-        } catch (e) {
-            return 0;
-        }
     },
 };
 

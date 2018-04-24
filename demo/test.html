@@ -10,11 +10,8 @@
 </head>
 <body>
 <script>
-    // var url = 'http://admin.jrtoo.com/cifcogroup/application/web/index.php?r=gold/mymoney&userId=25007845';
-    // var url = 'http://admin.jrtoo.com/cifcogroup/application/web/index.php';
-    // var apiURL = 'https://api.github.com/repos/vuejs/vue/commits?per_page=3&sha='
+
     var apiURL = 'https://api.github.com/repos/vuejs/vue/commits'
-    // var kdURL = 'https://www.sojson.com/open/api/weather/json.shtml'
     var params = {
         per_page: '3',
         sha: 'master'
@@ -29,6 +26,7 @@
         parameters:  pqParams,
         onSuccess: function (transport) {
             var response = transport.responseText || "no response text";
+            console.log('onSuccess');
             console.log(response);
             console.log('Success');
         },
