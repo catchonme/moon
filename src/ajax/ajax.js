@@ -37,11 +37,26 @@ var Ajax = {
 
         try {
             this.transport.open(this.method.toUpperCase(), this.url, this.options.asynchronous);
+            this.setRequestHeaders();
+            this.transport.onreadystatechange = this.onStateChange.bind(this);
             this.body = this.method == 'post' ? (this.options.postBody || params) : null;
             this.transport.send(this.body);
-            this.transport.onreadystatechange = this.onStateChange.bind(this);
         } catch (e) {
             console.log(e)
+        }
+    },
+    setRequestHeaders: function(){
+        var headers = {
+            'Accept': 'text/javascript, text/html, application/xml, text/xml, */*'
+        };
+
+        if (this.method == 'post') {
+            headers['Content-type'] = this.options.contentType +
+                (this.options.encoding ? '; charset=' + this.options.encoding : '');
+        }
+
+        for (var name in headers) {
+            this.transport.setRequestHeader(name, headers[name]);
         }
     },
     onStateChange: function() {
