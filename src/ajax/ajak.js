@@ -86,6 +86,7 @@ Object.prototype.isUndefined = function(object) {
     return typeof object == 'undefined';
 }
 
+// 这样写不能复用，同一个页面不能使用两次 Ajax，还需要改
 /* Ajax 主体 */
 var Ajax = {
     initialize: function (url, options) {
@@ -198,7 +199,7 @@ var Ajax = {
           return '';
       }
     },
-    getResponseText() {
+    getResponseText: function() {
         return this.transport.responseText;
     },
     success: function() {
@@ -206,5 +207,3 @@ var Ajax = {
         return !status || (status >= 200 && status < 300) || status == 304;
     },
 };
-
-// 这里需要的函数完善下，测试 Ajax ，能不能走通流程

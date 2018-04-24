@@ -104,7 +104,7 @@ var Ajax = {
             return '';
         }
     },
-    getResponseText() {
+    getResponseText: function() {
         return this.transport.responseText;
     },
     success: function() {

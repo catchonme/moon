@@ -26,14 +26,27 @@
         parameters:  pqParams,
         onSuccess: function (transport) {
             var response = transport.responseText || "no response text";
-            console.log('onSuccess');
             console.log(response);
-            console.log('Success');
         },
         onFailure: function () {
             console.log('Something went wrong')
         }
     })
+
+    var pqParams = {
+        age: 33
+    }
+    /*new Ajax.request(pqURL, {
+        method: 'post',
+        parameters:  pqParams,
+        onSuccess: function (transport) {
+            var response = transport.responseText || "no response text";
+            console.log(response);
+        },
+        onFailure: function () {
+            console.log('Something went wrong')
+        }
+    })*/
 
     function ajab(url, params) {
         var xhr = new XMLHttpRequest();
