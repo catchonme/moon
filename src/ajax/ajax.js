@@ -16,26 +16,27 @@ var Ajax = {
     getTransport: function() {
         return new XMLHttpRequest();
     },
-    request: function(url) {
+    request: function(url, options) {
+        this.initialize(url, options);
         this.url = url;
         this.method = this.options.method;
         var params = Object.isString(this.options.parameters) ?
                 this.options.parameters :
             Object.toQueryString(this.options.parameters);
 
-        if (!['get', 'post'].include(this.method)) {
+        if (!['get', 'post'].includes(this.method)) {
             params += (params ? '&' : '') + "_method=" + this.method;
             this.method = 'post';
         }
 
         if (params && this.method === 'get') {
-            this.url += (this.url.include('?') ? '&' : '?') + params;
+            this.url += (this.url.includes('?') ? '&' : '?') + params;
         }
 
         this.parameters = Object.toQueryParams(params);
 
         try {
-            var response = this.response();
+            // var response = this.response();
             this.getTransport.open(this.method.toUpperCase(), this.url, this.options.asynchronous);
 
             // if (this.options.asynchronous)
@@ -106,16 +107,18 @@ var Ajax = {
         }
     },
     respondToReadyState: function(readyState) {
-        var state = this.events[readyState], response = this.response();
+        var state = this.events[readyState]/*, response = this.response()*/;
 
         if (state == 'Complete') {
             try {
-                this._complete = true;
-                (this.options['on' + response.status]
+                console.log('123');
+                // this._complete = true;
+               /* (this.options['on' + response.status]
                     || this.options['on' + (this.success() ? 'Success' : 'Failure')]
-                    || Function.emptyFunction)(response, response.headerJSON);
+                    || Function.emptyFunction)(response, response.headerJSON);*/
             } catch (e) {
-                this.dispatchEvent(e)
+                // this.dispatchEvent(e)
+                console.log(e);
             }
         }
     },

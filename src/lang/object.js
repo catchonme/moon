@@ -142,7 +142,7 @@
     }
 
     function toQueryParams(separator) {
-        var match = this.strip().match(/([^?#]*)(#.*)?$/);
+        var match = String.strip().match(/([^?#]*)(#.*)?$/);
         if (!match) return { };
 
         var result = {};

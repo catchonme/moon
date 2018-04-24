@@ -65,11 +65,19 @@
         return regexp.source && regexp.source !== '(?:)';
     }
 
+    function interpolate(object, pattern) {
+        return new Template(this, object);
+    }
+
+    function strip() {
+        return this.replace(/^\s+|\s+$/, '');
+    }
     Object.extend(String, {
         camelize: camelize,
         uncamelize: uncamelize,
         capitalize: capitalize,
         interpret: interpret,
         gsub: gsub,
+        strip: strip
     })
 })()

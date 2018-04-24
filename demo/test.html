@@ -1,35 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        #pid {
-            font-size: 16px;
-        }
-        #demo {
-            position: relative;
-            width: 300px;
-            height: 200px;
-            border-left: 10px solid #00c8ff;
-            border-right: 20px solid #0c6d64;
-        }
-    </style>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../src/ajax/ajak.js"></script>
 </head>
 <body>
-<div id="demo">
-    <p id="pid">333</p>
-    <p class="pid">43434</p>
-    <p class="pid">43434</p>
-</div>
 <script>
-
-    log(Object.prototype.toString.call({name:'jack'}))
-
-   function log() {
-       console.log.apply(console, arguments)
-   }
-
+    // var url = 'http://admin.jrtoo.com/cifcogroup/application/web/index.php?r=gold/mymoney&userId=25007845';
+    // var url = 'http://admin.jrtoo.com/cifcogroup/application/web/index.php';
+    // var apiURL = 'https://api.github.com/repos/vuejs/vue/commits?per_page=3&sha='
+    // var apiURL = 'https://api.github.com/repos/vuejs/vue/commits'
+    var kdURL = 'https://www.sojson.com/open/api/weather/json.shtml'
+    var params = {
+        city: '北京'
+    }
+    Ajax.request(kdURL, {
+        method: 'get',
+        parameters:  params,
+        onSuccess: function (transport) {
+            var response = transport.reponseText || "no response text";
+            console.log('Success')
+        },
+        onFailure: function () {
+            console.log('Something went wrong')
+        }
+    })
 </script>
 </body>
 </html>
