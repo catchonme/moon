@@ -88,7 +88,6 @@ Object.prototype.isUndefined = function(object) {
 }
 
 
-
 var Ajax = {
     initialize: function (url, options) {
         this.options = {
@@ -103,6 +102,7 @@ var Ajax = {
         Object.extend(this.options, options || {});
         this.events = ['Uninitialized', 'loading', 'Loaded', 'Interactive', 'Complete'];
         this.options.method = this.options.method.toLowerCase();
+        this.transport = this.getTransport();
     },
     getTransport: function() {
         return new XMLHttpRequest();
@@ -115,7 +115,6 @@ var Ajax = {
             this.options.parameters :
             Object.toQueryString(this.options.parameters);
 
-        console.log(params);
         if (!['get', 'post'].includes(this.method)) {
             params += (params ? '&' : '') + "_method=" + this.method;
             this.method = 'post';
@@ -125,37 +124,23 @@ var Ajax = {
             this.url += (this.url.includes('?') ? '&' : '?') + params;
         }
 
-        console.log(this.url)
         this.parameters = Object.toQueryParams(params);
-        this.transport = this.getTransport();
+
         try {
-            console.log('try request')
-            // var response = this.response();
             this.transport.open(this.method.toUpperCase(), this.url, this.options.asynchronous);
-
-            // if (this.options.asynchronous)
-
-            // this.transport.onreadystatechange = this.onStateChange();
-            // this.setRequestHeader(this.body);
-
             this.body = this.method == 'post' ? (this.options.postBody || params) : null;
             this.transport.send(this.body);
-            /*this.transport.onload = function() {
-                console.log(this.responseText);
-            }*/
+            this.transport.onreadystatechange = this.onStateChange.bind(this);
         } catch (e) {
             console.log(e)
         }
     },
     response: function() {
-        console.log('response')
-        var readyState = this.transport.readyState, transport = this.getTransport();
-        console.log(readyState)
-        if (readyState == 2 || readyState == 4) {
+        var readyState = this.transport.readyState;
+        if (readyState == 4) {
             this.status = this.getStatus();
             this.statusText = this.getStatusText();
-            this.responseText = transport.responseText;
-            console.log(this.responseText)
+            this.responseText = this.getResponseText();
             return {
                 status: this.status,
                 statusText: this.statusText,
@@ -165,7 +150,7 @@ var Ajax = {
     },
     onStateChange: function() {
         var readyState = this.transport.readyState;
-        if (readyState > 1 && !((readyState == 4) )) {
+        if (readyState > 1) {
             this.respondToReadyState(this.transport.readyState);
         }
     },
@@ -176,15 +161,20 @@ var Ajax = {
           return '';
       }
     },
+    getResponseText() {
+        return this.transport.responseText;
+    },
     success: function() {
         var status = this.getStatus();
         return !status || (status >= 200 && status < 300) || status == 304;
     },
     respondToReadyState: function(readyState) {
         var state = this.events[readyState], response = this.response();
-        console.log('readyState')
         if (state == 'Complete') {
             try {
+                console.log(response)
+                console.log('-----------')
+                // var object = {response['status'], response.statusText, response.responseText}
                 this.options['on' + (this.success() ? 'Success' : 'Failure')](response)
                 /* (this.options['on' + response.status]
                      || this.options['on' + (this.success() ? 'Success' : 'Failure')]

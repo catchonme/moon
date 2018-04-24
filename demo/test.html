@@ -13,22 +13,49 @@
     // var url = 'http://admin.jrtoo.com/cifcogroup/application/web/index.php?r=gold/mymoney&userId=25007845';
     // var url = 'http://admin.jrtoo.com/cifcogroup/application/web/index.php';
     // var apiURL = 'https://api.github.com/repos/vuejs/vue/commits?per_page=3&sha='
-    // var apiURL = 'https://api.github.com/repos/vuejs/vue/commits'
-    var kdURL = 'https://www.sojson.com/open/api/weather/json.shtml'
+    var apiURL = 'https://api.github.com/repos/vuejs/vue/commits'
+    // var kdURL = 'https://www.sojson.com/open/api/weather/json.shtml'
     var params = {
-        city: '北京'
+        per_page: '3',
+        sha: 'master'
     }
-    Ajax.request(kdURL, {
+
+    var pqURL = 'http://www.pqtrade.cn/test/jsonTest.php';
+    var pqParams = {
+        name: 'wallen'
+    }
+    Ajax.request(pqURL, {
         method: 'get',
-        parameters:  params,
+        parameters:  pqParams,
         onSuccess: function (transport) {
-            var response = transport.reponseText || "no response text";
-            console.log('Success')
+            var response = transport.responseText || "no response text";
+            console.log(response);
+            console.log('Success');
         },
         onFailure: function () {
             console.log('Something went wrong')
         }
     })
+
+    function ajab(url, params) {
+        var xhr = new XMLHttpRequest();
+        var param = [];
+            Object.keys(params).forEach(function(value, key) {
+            var key = value, values = params[value];
+                param.push(key +'='+ values);
+        })
+        url = url + '?' + param.join('&');
+        console.log(url)
+        xhr.open('GET', url)
+        xhr.send();
+        xhr.onload = function(){
+            console.log(xhr.status);
+            console.log(xhr.statusText);
+            console.log(xhr.responseText);
+        }
+    }
+
+    // ajab(pqURL, pqParams);
 </script>
 </body>
 </html>
