@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../libs/prototype.js"></script>
+</head>
+<body>
+<script>
+    var hrefTemplate = new Template('/dir/showAll?lang=#{language}&categ=#{category}&lv=#{levels}');
+    var selection = {category: 'books' , language: 'en-US', levels: 4};
+    var res = hrefTemplate.evaluate(selection);
+    // console.log(res);
+
+    var tmp = '/dir/showAll?lang=1#{language}&categ=2#{category}&lv=3#{levels}';
+    var pattern = /\d(#\{(.*?)\})/g;
+    var res1 = tmp.replace(pattern, '$1--');
+    console.log(res1)
+    // console.log(tmp)
+
+</script>
+</body>
+</html>

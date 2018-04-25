@@ -6,22 +6,31 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="../src/ajax/ajak.js"></script>
+    <script src="../src/ajax/ajaH.js"></script>
 </head>
 <body>
 <script>
-
-    var apiURL = 'https://api.github.com/repos/vuejs/vue/commits'
-    var params = {
-        per_page: '3',
-        sha: 'master'
-    }
 
     var pqURL = 'http://www.pqtrade.cn/test/jsonTest.php';
     var pqParams = {
         name: 'wallen'
     }
-    Ajax.request(pqURL, {
+    var pqParams1 = {
+        name: 'jack'
+    }
+    /*Ajax.request(pqURL, {
+        method: 'post',
+        parameters:  pqParams,
+        onSuccess: function (transport) {
+            var response = transport.responseText || "no response text";
+            console.log(response);
+        },
+        onFailure: function () {
+            console.log('Something went wrong')
+        }
+    })*/
+
+    new Ajax(pqURL, {
         method: 'post',
         parameters:  pqParams,
         onSuccess: function (transport) {
@@ -33,12 +42,9 @@
         }
     })
 
-    var pqParams = {
-        age: 33
-    }
-    /*new Ajax.request(pqURL, {
-        method: 'post',
-        parameters:  pqParams,
+    new Ajax(pqURL, {
+        method: 'get',
+        parameters:  pqParams1,
         onSuccess: function (transport) {
             var response = transport.responseText || "no response text";
             console.log(response);
@@ -46,7 +52,7 @@
         onFailure: function () {
             console.log('Something went wrong')
         }
-    })*/
+    })
 
     function ajab(url, params) {
         var xhr = new XMLHttpRequest();
