@@ -1,114 +1,140 @@
-var Ajax = {
-    initialize: function (url, options) {
-        this.options = {
-            method: 'post',
-            asynchronous: true,
-            contentType: 'application/x-www-form-urlencoded',
-            encoding: 'UTF-8',
-            parameters: '',
-            evalJSON: true,
-            evalJS: true
-        };
-        Object.extend(this.options, options || {});
-        this.events = ['Uninitialized', 'loading', 'Loaded', 'Interactive', 'Complete'];
-        this.url = url;
-        this.method = this.options.method = this.options.method.toLowerCase();
-        this.transport = this.getTransport();
-    },
-    getTransport: function() {
-        return new XMLHttpRequest();
-    },
-    request: function(url, options) {
-        this.initialize(url, options);
-        var params = Object.isString(this.options.parameters) ?
-            this.options.parameters :
-            Object.toQueryString(this.options.parameters);
+/**
+ *  测试 AJAX 专用
+ * @param str
+ * @returns {string}
+ */
+/* 依赖函数 */
 
-        if (!['get', 'post'].includes(this.method)) {
-            params += (params ? '&' : '') + "_method=" + this.method;
-            this.method = 'post';
+function isString (object) {
+    return Object.prototype.toString.bind(object) == '[object String]';
+}
+
+function toQueryString (object) {
+    var result = [];
+    Object.keys(object).forEach(function (value, key) {
+        key = encodeURIComponent(value), values = object[value];
+
+        if (values && typeof values == 'object') {
+            if (Array.isArray(values)) {
+                var queryValues = [];
+                for (var i = 0, length = value.length; i < length; i++) {
+                    value = values[i];
+                    queryValues.push(toQueryPair(key, value));
+                }
+                result.push(queryValues)
+            }
+        } else {
+            result.push(toQueryPair(key, values));
         }
+    })
+    return result.join('&');
+}
 
-        if (params && this.method === 'get') {
-            this.url += (this.url.includes('?') ? '&' : '?') + params;
-        }
+function toQueryPair(key, value) {
+    if (isUndefined(value)) return key;
 
-        this.parameters = Object.toQueryParams(params);
+    value = String(value);
 
-        try {
-            this.transport.open(this.method.toUpperCase(), this.url, this.options.asynchronous);
-            this.setRequestHeaders();
-            this.transport.onreadystatechange = this.onStateChange.bind(this);
-            this.body = this.method == 'post' ? (this.options.postBody || params) : null;
-            this.transport.send(this.body);
-        } catch (e) {
-            console.log(e)
-        }
-    },
-    setRequestHeaders: function(){
+    value = encodeURIComponent(value);
+    // Likewise, according to the spec, spaces should be '+' rather than '%20'.
+    value = value.replace(/%20/, '+');
+    return key + '=' + value;
+}
+
+function isUndefined(object) {
+    return typeof object == 'undefined';
+}
+
+/* Ajax 主体 */
+
+function getTransport() {
+    return new XMLHttpRequest();
+}
+
+function Ajax(url, options) {
+
+    /* initialize */
+    this.options = {
+        method: 'post',
+        contentType: 'application/x-www-form-urlencoded',
+        encoding: 'UTF-8',
+        parameters: '',
+    };
+    Object.assign(this.options, options || {});
+    this.events = ['Uninitialized', 'loading', 'Loaded', 'Interactive', 'Complete'];
+    this.url = url;
+    this.method = this.options.method = this.options.method.toLowerCase();
+    this.transport = getTransport();
+
+    /* request */
+    var params = isString(this.options.parameters) ?
+        this.options.parameters :
+        toQueryString(this.options.parameters);
+
+    if (!['get', 'post'].includes(this.method)) {
+        params += (params ? '&' : '') + "_method=" + this.method;
+        this.method = 'post';
+    }
+
+    if (params && this.method === 'get') {
+        this.url += (this.url.includes('?') ? '&' : '?') + params;
+    }
+
+    try {
+        this.transport.open(this.method.toUpperCase(), this.url);
+
+        this.transport.onreadystatechange = onStateChange.bind(this);
+
         var headers = {
             'Accept': 'text/javascript, text/html, application/xml, text/xml, */*'
         };
-
         if (this.method == 'post') {
             headers['Content-type'] = this.options.contentType +
                 (this.options.encoding ? '; charset=' + this.options.encoding : '');
         }
-
         for (var name in headers) {
             this.transport.setRequestHeader(name, headers[name]);
         }
-    },
-    onStateChange: function() {
-        var readyState = this.transport.readyState;
-        if (readyState > 1) {
-            this.respondToReadyState(this.transport.readyState);
+
+        this.body = this.method == 'post' ? (params) : null;
+        this.transport.send(this.body);
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+function onStateChange() {
+    var transport = this.transport;
+    var readyState = transport.readyState;
+    if (readyState > 1) {
+        var state = this.events[readyState];
+        if (transport.readyState == 4) {
+            this.status = (function(){
+                try {
+                    // IE sometimes returns 1223 for a 204 response
+                    if (this.transport.status === 1223) return 204;
+                    return this.transport.status || 0;
+                } catch (e) {
+                    return 0;
+                }
+            })();
+            this.statusText = transport.statusText;
+            this.responseText = transport.responseText;
         }
-    },
-    respondToReadyState: function(readyState) {
-        var state = this.events[readyState], response = this.response();
+        this.response = {
+            status: this.status,
+            statusText: this.statusText,
+            responseText: this.responseText
+        }
         if (state == 'Complete') {
             try {
-                this.options['on' + (this.success() ? 'Success' : 'Failure')](response)
+                this.success = !this.status || (this.status >= 200 && this.status < 300) || this.status == 304;
+                this.options['on' + (this.success ? 'Success' : 'Failure')](this.response)
             } catch (e) {
                 console.log(e);
             }
         }
-    },
-    response: function() {
-        var readyState = this.transport.readyState;
-        if (readyState == 4) {
-            this.status = this.getStatus();
-            this.statusText = this.getStatusText();
-            this.responseText = this.getResponseText();
-            return {
-                status: this.status,
-                statusText: this.statusText,
-                responseText: this.responseText
-            }
-        }
-    },
-    getStatus: function() {
-        try {
-            // IE sometimes returns 1223 for a 204 response
-            if (this.transport.status === 1223) return 204;
-            return this.transport.status || 0;
-        } catch (e) {
-            return 0;
-        }
-    },
-    getStatusText: function(){
-        try {
-            return this.transport.statusText || '';
-        }  catch (e) {
-            return '';
-        }
-    },
-    getResponseText: function() {
-        return this.transport.responseText;
-    },
-    success: function() {
-        var status = this.getStatus();
-        return !status || (status >= 200 && status < 300) || status == 304;
-    },
-};
+    }
+}
+
+

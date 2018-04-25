@@ -59,5 +59,26 @@
         }
     }
 
+    function pointer(event) {
+        return { x: pointerX(event), y:pointerY(event) };
+    }
+
+    function pointerX(event) {
+        var docElement = document.documentElement,
+            body = document.body || { scrollLeft: 0};
+
+        return event.pageX || (event.clientX +
+            (docElement.scrollLeft || body.scrollLeft) -
+            (docElement.clientLeft || 0));
+    }
+
+    function pointerY(event) {
+        var docElement = document.documentElement,
+            body = document.body || { scrollTop: 0};
+
+        return event.pageY || (event.clientY +
+            (docElement.scrollTop || body.scrollTop) -
+            (docElement.clientTop || 0));
+    }
     // 用户自定义事件绑定
 })()

@@ -4,6 +4,9 @@
     <list default="true" id="855f5175-0cb8-4db3-9b06-f872796fde47" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/demo/test.html" afterPath="$PROJECT_DIR$/demo/test.html" />
+      <change beforePath="$PROJECT_DIR$/src/ajax/ajaH.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/src/ajax/ajax.js" afterPath="$PROJECT_DIR$/src/ajax/ajax.js" />
+      <change beforePath="$PROJECT_DIR$/src/dom/event.js" afterPath="$PROJECT_DIR$/src/dom/event.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -15,58 +18,42 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="ajak.js" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/src/ajax/ajak.js">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="523">
-                    <caret line="181" column="47" lean-forward="true" selection-start-line="179" selection-start-column="16" selection-end-line="181" selection-end-column="47" />
-                    <folding>
-                      <element signature="e#112#158#0" expanded="false" />
-                      <element signature="e#199#243#0" expanded="false" />
-                      <element signature="e#459#534#0" expanded="false" />
-                      <element signature="e#587#1291#0" expanded="false" />
-                      <element signature="e#1344#1997#0" expanded="false" />
-                      <element signature="e#2051#2318#0" expanded="false" />
-                      <element signature="e#2368#2412#0" expanded="false" />
-                    </folding>
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="test.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/demo/test.html">
+      <file leaf-file-name="ajak.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ajax/ajak.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="38" column="10" lean-forward="true" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
+            <state relative-caret-position="392">
+              <caret line="89" column="13" lean-forward="true" selection-start-line="89" selection-start-column="13" selection-end-line="89" selection-end-column="13" />
               <folding>
-                <element signature="e#1575#2242#0" expanded="false" />
+                <element signature="e#112#158#0" expanded="false" />
+                <element signature="e#199#243#0" expanded="false" />
+                <element signature="e#459#534#0" expanded="false" />
+                <element signature="e#587#1291#0" expanded="false" />
+                <element signature="e#1344#1997#0" expanded="false" />
+                <element signature="e#2051#2318#0" expanded="false" />
+                <element signature="e#2368#2412#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ajaH.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ajax/ajaH.js">
+      <file leaf-file-name="test.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/demo/test.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1220">
-              <caret line="84" column="0" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!block;n#isString#0" expanded="false" />
-                <element signature="n#!!block;n#toQueryString#0" expanded="false" />
-                <element signature="n#!!block;n#toQueryPair#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="905">
+              <caret line="45" column="30" lean-forward="false" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="event.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/dom/event.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="547">
+              <caret line="82" column="16" lean-forward="false" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -74,9 +61,14 @@
       <file leaf-file-name="ajax.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ajax/ajax.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
-              <folding />
+            <state relative-caret-position="702">
+              <caret line="140" column="0" lean-forward="false" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!block;n#isString#0" expanded="false" />
+                <element signature="n#!!block;n#toQueryString#0" expanded="false" />
+                <element signature="n#!!block;n#toQueryPair#0" expanded="false" />
+                <element signature="n#!!block;n#isUndefined#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -84,7 +76,7 @@
       <file leaf-file-name="string.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lang/string.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2418">
+            <state relative-caret-position="454">
               <caret line="78" column="8" lean-forward="false" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="8" />
               <folding />
             </state>
@@ -175,6 +167,7 @@
       <find>toQueryParams</find>
       <find>this.parameters</find>
       <find>parameters</find>
+      <find>onStateChange</find>
     </findStrings>
     <replaceStrings>
       <replace>function</replace>
@@ -189,13 +182,14 @@
       <list>
         <option value="$PROJECT_DIR$/src/lang/string.js" />
         <option value="$PROJECT_DIR$/src/lang/object.js" />
-        <option value="$PROJECT_DIR$/src/ajax/ajax.js" />
         <option value="$PROJECT_DIR$/src/ajax/ajah.js" />
         <option value="$PROJECT_DIR$/src/ajax/ajak.js" />
         <option value="$PROJECT_DIR$/demo/template.js" />
         <option value="$PROJECT_DIR$/demo/isSameOrigin.html" />
-        <option value="$PROJECT_DIR$/demo/test.html" />
         <option value="$PROJECT_DIR$/src/ajax/ajaH.js" />
+        <option value="$PROJECT_DIR$/src/ajax/ajax.js" />
+        <option value="$PROJECT_DIR$/demo/test.html" />
+        <option value="$PROJECT_DIR$/src/dom/event.js" />
       </list>
     </option>
   </component>
@@ -262,6 +256,12 @@
               <item name="moon" type="b2602c69:ProjectViewProjectNode" />
               <item name="moon" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="dom" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="moon" type="b2602c69:ProjectViewProjectNode" />
+              <item name="moon" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="lang" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -311,18 +311,18 @@
       <option name="presentableId" value="Default" />
       <updated>1524528679809</updated>
       <workItem from="1524528681950" duration="19319000" />
-      <workItem from="1524639105837" duration="4866000" />
+      <workItem from="1524639105837" duration="7107000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24185000" />
+    <option name="totallyTimeSpent" value="26426000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20763889" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20763889" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -356,9 +356,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="899">
           <caret line="29" column="10" lean-forward="true" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
-          <folding>
-            <element signature="e#1575#2242#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -382,7 +380,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="310">
           <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
-          <folding />
+          <folding>
+            <element signature="n#!!block;n#isString#0" expanded="false" />
+            <element signature="n#!!block;n#toQueryString#0" expanded="false" />
+            <element signature="n#!!block;n#toQueryPair#0" expanded="false" />
+            <element signature="n#!!block;n#isUndefined#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -481,26 +484,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lang/string.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2418">
-          <caret line="78" column="8" lean-forward="false" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1192">
           <caret line="13731" column="4" lean-forward="false" selection-start-line="13731" selection-start-column="4" selection-end-line="13731" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ajax/ajax.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
           <folding />
         </state>
       </provider>
@@ -539,10 +526,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/lang/string.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="78" column="8" lean-forward="false" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ajax/ajaH.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="46" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ajax/ajax.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="140" column="0" lean-forward="false" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!block;n#isString#0" expanded="false" />
+            <element signature="n#!!block;n#toQueryString#0" expanded="false" />
+            <element signature="n#!!block;n#toQueryPair#0" expanded="false" />
+            <element signature="n#!!block;n#isUndefined#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ajax/ajak.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="181" column="47" lean-forward="true" selection-start-line="179" selection-start-column="16" selection-end-line="181" selection-end-column="47" />
+        <state relative-caret-position="392">
+          <caret line="89" column="13" lean-forward="true" selection-start-line="89" selection-start-column="13" selection-end-line="89" selection-end-column="13" />
           <folding>
             <element signature="e#112#158#0" expanded="false" />
             <element signature="e#199#243#0" expanded="false" />
@@ -557,23 +573,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/demo/test.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="38" column="10" lean-forward="true" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
-          <folding>
-            <element signature="e#1575#2242#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="905">
+          <caret line="45" column="30" lean-forward="false" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ajax/ajaH.js">
+    <entry file="file://$PROJECT_DIR$/src/dom/event.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1220">
-          <caret line="84" column="0" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!block;n#isString#0" expanded="false" />
-            <element signature="n#!!block;n#toQueryString#0" expanded="false" />
-            <element signature="n#!!block;n#toQueryPair#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="547">
+          <caret line="82" column="16" lean-forward="false" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
