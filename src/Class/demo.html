@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="Class.js"></script>
+</head>
+<body>
+<script>
+
+    var Animal = new Class({
+        initialize: function(age){
+            this.age = age;
+        }
+    });
+
+    var myAnimal = new Animal(23);
+    log(myAnimal.age)
+
+    var Cat = new Class({
+        Implements: Animal,
+        setName: function(name){
+            this.name = name
+        }
+    });
+    var myCat = new Cat(20);
+    myCat.setName('asds');
+    log(myCat.age); // alerts 'Micia'.
+
+
+    function log() {
+        console.log.apply(console, arguments)
+    }
+</script>
+</body>
+</html>
