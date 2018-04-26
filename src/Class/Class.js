@@ -87,7 +87,7 @@ Object.extend({
     },
 })
 
-
+/* class 主体 */
 // 新建一个 Class 的类，new Type 也是一个函数
 var Class = function(params){
 	// 如果传入的 参数是方法，就把该函数当作初始化的方法
@@ -98,9 +98,8 @@ var Class = function(params){
 		reset(this);
 		// 如果当前类正在构建，就返回当前类，不做任何操作
 		if (newClass.$prototyping) return this;
-		// $caller 和 $family 是什么啊
+
 		this.$caller = null;
-		this.$family = null;
 		// 有初始化函数的话，就传入参数到该初始化函数，没有就返回自身
 		var value = (this.initialize) ? this.initialize.apply(this, arguments) : this;
 		// 这句又是什么意思，一个 $caller ，一个 caller
@@ -214,8 +213,8 @@ Class.Mutators = {
 	},
 
 	Implements: function(items){
-		var afterItems = typeof items == 'object' ? items : [items];
-		[].slice.call(afterItems).forEach(function(item){
+		var afterItems = [items];
+		afterItems.forEach(function(item){
 			var instance = new item;
 			for (var key in instance) implement.call(this, key, instance[key], true);
 		}, this);

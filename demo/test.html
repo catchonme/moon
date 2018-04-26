@@ -11,53 +11,31 @@
 <body>
 <script>
 
-    var pqURL = 'http://www.pqtrade.cn/test/jsonTest.php';
-    var pqParams = {
-        name: 'wallen'
-    }
-    var pqParams1 = {
-        name: 'jack'
-    }
-
-    new Ajax(pqURL, {
+    var url = 'http://www.pqtrade.cn/test/jsonTest.php';
+    var options = {
         method: 'post',
-        parameters:  pqParams,
-        onSuccess: function (transport) {
-            var response = transport.responseText || "no response text";
-            console.log(response);
-        },
-        onFailure: function () {
-            console.log('Something went wrong')
-        }
-    })
+        data: {name:'jack'}
+    }
 
-    new Ajax(pqURL, {
-        method: 'get',
-        parameters:  pqParams1,
-        onSuccess: function (transport) {
-            var response = transport.responseText || "no response text";
-            console.log(response);
-        },
-        onFailure: function () {
-            console.log('Something went wrong')
-        }
-    })
-
-    function ajab(url, params) {
+    function ajax(url, options) {
         var xhr = new XMLHttpRequest();
-        var param = [];
-            Object.keys(params).forEach(function(value, key) {
-            var key = value, values = params[value];
-                param.push(key +'='+ values);
+        var data = [];
+        Object.keys(options.data).forEach(function(value, key) {
+        var key = value, values = options.data[value];
+            data.push(key +'='+ values);
         })
 
-        var paramData = param.join('&');
+        var afterData = data.join('&');
 
-        // url = url + '?' + param.join('&');
-        // console.log(url)
-        xhr.open('POST', url)
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send(paramData);
+        if (options.method.toUpperCase() == 'GET') {
+            url = url + '?' + afterData;
+            xhr.open('GET', url);
+            xhr.send();
+        } else {
+            xhr.open('POST', url);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send(afterData);
+        }
         xhr.onload = function(){
             console.log(xhr.status);
             console.log(xhr.statusText);
@@ -65,7 +43,7 @@
         }
     }
 
-    // ajab(pqURL, pqParams);
+    ajax(url, options);
 </script>
 </body>
 </html>
