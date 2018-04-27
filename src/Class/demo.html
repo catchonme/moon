@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="Class.js"></script>
+    <script src="ClassK.js"></script>
 </head>
 <body>
 <script>
@@ -11,25 +11,22 @@
     var Animal = new Class({
         initialize: function(age){
             this.age = age;
-            this.friends = [11];
         },
+
     });
 
+    var myAnimal = new Animal(23);
+    log(myAnimal.age)
+
     var Cat = new Class({
-        Implements: Animal,
-        setAddr: function (addr) {
-            this.addr = addr;
+        Extends: Animal,
+        initialize: function (age) {
+            this.age = age + 33;
         }
     })
 
     var myCat = new Cat(23);
-    myCat.setAddr('beijing');
-    myCat.friends.push(22);
-    log(myCat.friends)
-
-    var youCat = new Cat(33);
-    youCat.friends.push(3);
-    log(youCat.friends)
+    log(myCat.age)
 
     function log() {
         console.log.apply(console, arguments)

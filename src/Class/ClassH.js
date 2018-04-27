@@ -90,6 +90,8 @@ Object.extend({
 /* class 主体 */
 // 新建一个 Class 的类，new Type 也是一个函数
 var Class = function(params){
+    // 如果传入的 参数是方法，就把该函数当作初始化的方法
+    if (typeof(params) == 'Function') params = {initialize: params};
 
     var newClass = function(){
         // 解除属性里对其他对象的引用
@@ -98,12 +100,12 @@ var Class = function(params){
         this.$caller = null;
         // 有初始化函数的话，就传入参数到该初始化函数并执行，没有就返回自身
         var value = (this.initialize) ? this.initialize.apply(this, arguments) : this;
-
-        console.log(this.$caller);
-        this.$caller = null;
+        // caller， 调用当前函数的哪个函数
+        this.$caller = this.caller = null;
         return value;
-        // 新生成的函数 newClass 与 this 绑定，
+        // extend(this) 把类的方法，都添加到当前新建的类中
         // implement(params) 把 params 的所有方法都添加到当前类中
+        // }.extend(this).implement(params);
     }.extend(this).implement(params);
 
     // 指定当前类的父类是哪一个
@@ -159,17 +161,18 @@ var wrap = function(self, key, method){
         // 如果方法是是被保护的，或者这个方法没有 $caller ，就不能被调用
         if (method.$protected && this.$caller == null) throw new Error('The method "' + key + '" cannot be called.');
 
-        var current = this.$caller;
-
+        var caller = this.caller, current = this.$caller;
+        // console.log(this.caller);
         if (this.$caller) {
-            // console.log('this.$caller.$name is ' + this.$caller.$name || 'no name');
+            console.log(this.$caller.name);
         }
 
-        this.$caller = wrapper; // method 的 $caller
+        // 这里临时更换 this.caller 和 this.$caller
+        this.caller = current; this.$caller = wrapper;
         // 将 method 绑定到当前对象中
         var result = method.apply(this, arguments);
 
-        this.$caller = current; // wrapper 的 $caller
+        this.$caller = current; this.caller = caller;
         return result;
         // 通过extend ,$owner, $origin, $name 加到 wrapper 函数的属性中去
         // 这样就能在 parent 中使用 this.$caller.$name，this.$caller.$owner.parent 中是使用了
@@ -180,25 +183,15 @@ var wrap = function(self, key, method){
 
 var implement = function(key, value, retain){
 
-    // 使用 Extends 继承时
+    // 使用 Extends 继承时，
     if (Class.Mutators.hasOwnProperty(key)){
         // console.log(key) // Extends
-        // console.log(value) // newClass 函数
         value = Class.Mutators[key].call(this, value);
-        if (value == null) {
-            return this;
-        }
+        if (value == null) return this;
     }
 
-    // console.log('implement params ' + key)
-    // console.log('implement params value ' + value)
     // this.prototype[key] = (retain) ? value : wrap(this, key, value);
-    // console.log('retain is ' + retain || 'retain is undefined') // undefined
-
-    /*
-     Extends 继承的时候，retain 是 false ,所以 wrap 函数
-     Implements 的时候，该函数为新函数的prototype
-     */
+    // console.log(retain) // undefined
     this.prototype[key] = (retain) ? value : wrap(this, key, value);
 
     return this;

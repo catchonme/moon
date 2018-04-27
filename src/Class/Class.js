@@ -96,22 +96,18 @@ var Class = function(params){
 	var newClass = function(){
 		// 解除属性里对其他对象的引用
 		reset(this);
-		// 如果当前类正在构建，就返回当前类，不做任何操作
-		if (newClass.$prototyping) return this;
 
 		this.$caller = null;
-		// 有初始化函数的话，就传入参数到该初始化函数，没有就返回自身
+		// 有初始化函数的话，就传入参数到该初始化函数并执行，没有就返回自身
 		var value = (this.initialize) ? this.initialize.apply(this, arguments) : this;
-		// 这句又是什么意思，一个 $caller ，一个 caller
+		// caller， 调用当前函数的哪个函数
 		this.$caller = this.caller = null;
 		return value;
 		// extend(this) 把类的方法，都添加到当前新建的类中
 		// implement(params) 把 params 的所有方法都添加到当前类中
+	// }.extend(this).implement(params);
 	}.extend(this).implement(params);
 
-	//指定 constructor ，以便使用 instanceOf 来验证
-	newClass.$constructor = Class;
-	newClass.prototype.$constructor = newClass;
 	// 指定当前类的父类是哪一个
 	newClass.prototype.parent = parent;
 
@@ -130,6 +126,7 @@ var parent = function(){
 		parent = this.$caller.$owner.parent,
 		// 得到父类相同名字的方法
 		previous = (parent) ? parent.prototype[name] : null;
+	// console.log(name)
 	if (!previous) throw new Error('The method "' + name + '" has no parent.');
 	// 父类的该同名函数，添加到当前子类中
 	return previous.apply(this, arguments);
@@ -152,15 +149,20 @@ var reset = function(object){
 	return object;
 };
 
+// 这个函数是一定会用到的
 var wrap = function(self, key, method){
 	if (method.$origin) method = method.$origin;
 	var wrapper = function(){
 		// 如果方法是是被保护的，或者这个方法没有 caller ，就不能被调用
 		if (method.$protected && this.$caller == null) throw new Error('The method "' + key + '" cannot be called.');
+
 		var caller = this.caller, current = this.$caller;
+
+		// 这里临时更换 this.caller 和 this.$caller
 		this.caller = current; this.$caller = wrapper;
 		// 将 method 绑定到当前对象中
 		var result = method.apply(this, arguments);
+
 		this.$caller = current; this.caller = caller;
 		return result;
 		// 通过extend ,把当前函数的属性附加到 self 里去
@@ -175,12 +177,16 @@ var implement = function(key, value, retain){
 		if (value == null) return this;
 	}
 
+	// 只要是 构建 class , 就会调用当前函数，这是的retain 就是 wrap(this, key, value)
 	if (typeof(value) == 'function'){
 		// 隐藏的方法子类就不要再继承使用了
 		// $hidden 和 $protected 去看函数那章
 		if (value.$hidden) return this;
+		// this.prototype[key] = (retain) ? value : wrap(this, key, value);
+		console.log(retain) // undefined
 		this.prototype[key] = (retain) ? value : wrap(this, key, value);
 	} else {
+		console.log(1);
 		// merge 应该是同名的函数，这样就直接添加进去就好
 		Object.merge(this.prototype, key, value);
 	}
@@ -190,12 +196,8 @@ var implement = function(key, value, retain){
 
 // 为了将父类的的属性继承到子类，会使用中间变量，将父类传递给中间变量，再通过中间变量传递给子类
 var getInstance = function(klass){
-	// 谁知当前当前类正在构建
-	klass.$prototyping = true;
 
 	var proto = new klass;
-	// 这里就删除 $prototyping ,也就是构建的过程就是上面这一行咯
-	delete klass.$prototyping;
 	return proto;
 };
 
