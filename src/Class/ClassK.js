@@ -3,6 +3,23 @@
  */
 
 /* 依赖函数 */
+
+var class2Type = function (object) {
+    var _toString = Object.prototype.toString;
+    var type = _toString.call(object);
+    var afterType = '';
+    switch (type) {
+        case '[object String]': afterType = 'string';break;
+        case '[object Number]': afterType = 'number';break;
+        case '[object Object]': afterType = 'object';break;
+        case '[object Array]': afterType = 'array';break;
+        case '[object Null]': afterType = 'null';break;
+        case '[object Undefined]': afterType = 'undefined';break;
+    }
+    return afterType;
+}
+
+
 Function.prototype.overloadSetter = function(usePlural){
     var self = this;
     return function(a, b){
@@ -39,7 +56,7 @@ Function.implement({
 });
 
 var cloneOf = function(item){
-    switch (typeof(item)){
+    switch (class2Type(item)){
         case 'array': return item.clone();
         case 'object': return Object.clone(item);
         default: return item;
@@ -52,13 +69,14 @@ Array.implement('clone', function(){
     return clone;
 });
 
+var _toString = Object.prototype.toString
 var mergeOne = function(source, key, current){
-    switch (typeof(current)){
+    switch (class2Type(current)){
         case 'object':
-            if (typeof(source[key]) == 'object') Object.merge(source[key], current);
+            if (class2Type(source[key]) == 'object') Object.merge(source[key], current);
             else source[key] = Object.clone(current);
             break;
-        case 'array': source[key] = current.clone(); break;
+        case 'array': source[key] = current.clone();break;
         default: source[key] = current;
     }
     return source;
@@ -101,8 +119,8 @@ var Class = function(params){
 
         this.$caller = null;
         return value;
-        // 新生成的函数 newClass 与 this 绑定，
-        // implement(params) 把 params 的所有方法都添加到当前类中
+        // 新生成的函数 newClass 与 this 绑定，也就是与 Class 绑定
+        // implement(params) 把 params 的所有方法都添加到当前类的 prototype 中
     }.extend(this).implement(params);
 
     // 给当前类增加一个原型方法 parent ，这样在当前类的函数中，可以使用 this.parent(args) 来调用父类的方法
@@ -121,8 +139,7 @@ var parent = function(){
     if (!this.$caller) throw new Error('The method "parent" cannot be called.');
 
     // console.log(this.$caller) // wrap 里面的 wrapper 函数
-    // 当前函数被调用的名字 function person(age) { this.age = age }，则 age 被调用的就是 person 函数，就是得到 person 这个名字
-    // console.log(this.$caller.$name); // 会打印出子类的名称
+    // console.log(this.$caller.$name); // 会打印出子类 prototype 中函数的名称
     var name = this.$caller.$name,
         // $owner 当前类对象, 得到当前类对象的父类对象
         parent = this.$caller.$owner.parent,
@@ -142,7 +159,7 @@ var parent = function(){
 var reset = function(object){
     for (var key in object){
         var value = object[key];
-        switch (typeof(value)){
+        switch (_toString.call(value)){
             case 'object':
                 var F = function(){};
                 F.prototype = value;
@@ -178,7 +195,18 @@ var implement = function(key, value, retain){
         因为继承需要将父类的函数重新绑定上下文到子类中，所以需要 wrap
      Implements 的时候，该函数为新函数的 prototype
      */
-    this.prototype[key] = (retain) ? value : wrap(this, key, value);
+    if (typeof value == 'function') {
+        this.prototype[key] = (retain) ? value : wrap(this, key, value);
+    } else {
+        /*if (key == 'friends') {
+            console.log(Array.isArray(value))
+            console.log(value);
+            this.prototype.friends = value.clone()
+        } else {
+            this.prototype[key] = value
+        }*/
+        Object.merge(this.prototype, key, value)
+    }
 
     return this;
 };
@@ -195,7 +223,7 @@ var wrap = function(self, key, method){
         // 使用 Extends 继承后，在子类的函数中使用 this.parent(args)的时候，才会有 this.$caller
         var current = this.$caller;
         if (current) {
-            console.log('this.$caller.$name is ' + current || 'no name');
+            console.log('this.$caller.$name is ' + current.$name || 'no name');
         }
 
         this.$caller = wrapper; // method 的 $caller
@@ -222,11 +250,12 @@ var wrap = function(self, key, method){
     return wrapper;
 };
 
-// 为了将父类的的属性继承到子类，会使用中间变量，将父类传递给中间变量，再通过中间变量传递给子类
+// 为了将父类的的属性继承到子类，会使用中间变量，父类实例化后传递给中间变量，实例化后父类的属性和prototype中的方法，
+// 都会传递给中间变量，再通过中间变量传递给子类
 var getInstance = function(klass){
     // 获取父类在 initialize 中的属性和函数
     var proto = new klass;
-    console.log(proto.setFri)
+
     return proto;
 };
 
@@ -248,7 +277,6 @@ Class.Mutators = {
         // 指向当前类的父类是 parent 参数
         this.parent = parent;
         // 使用 getInstance 得到父类的属性（initialize内部的）和函数
-        console.log(getInstance(parent))
         this.prototype = getInstance(parent);
     },
     // 既然 Implements 只是把伪父类的 prototype 给当前类的 prototype，
@@ -260,7 +288,7 @@ Class.Mutators = {
         afterItems.forEach(function(item){
             var instance = new item;
             for (var key in instance) {
-                console.log(key + '-------')
+                // console.log(key + '-------')
                 implement.call(this, key, instance[key], true);
             }
         }, this);

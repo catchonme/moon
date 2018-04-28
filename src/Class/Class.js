@@ -183,7 +183,7 @@ var implement = function(key, value, retain){
 		// $hidden 和 $protected 去看函数那章
 		if (value.$hidden) return this;
 		// this.prototype[key] = (retain) ? value : wrap(this, key, value);
-		console.log(retain) // undefined
+		// console.log(retain) // undefined
 		this.prototype[key] = (retain) ? value : wrap(this, key, value);
 	} else {
 		console.log(1);

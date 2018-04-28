@@ -3,32 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="ClassB.js"></script>
+    <!--<script src="../../../libs/mootools.js"></script>-->
+    <script src="ClassK.js"></script>
+    <!--<script src="Class.js"></script>-->
 </head>
 <body>
 <script>
     var Animal = new Class({
         initialize: function () {
             this.age = 23;
+            this.friends = [11];
         },
         setName: function(name) {
             this.firstname = 'first ' + name;
         }
     })
 
+    var myAnimal = new Animal()
+
+    log(myAnimal.friends)
+
     var Cat = new Class({
-        Extends: Animal,
-        initialize: function () {
+        Implements: Animal,
+        initialize: function (name) {
+            // this.parent()
             this.name = name;
         },
         setName: function(name){
-            this.parent(name)
-            this.lastname = 'last' + name
+            // this.parent(name)
+            this.lastname = 'last ' + name
         }
     })
 
-    var myCat = new Cat();
+    var myCat = new Cat('jack name');
+    log(myCat.name);
+    log(myCat.age);
+    myCat.friends.push(22);
+    var _toString = Object.prototype.toString
+    // log(_toString.call(myCat.friends))
+    log(myCat.friends)
+
+    myCat.setName('jack')
+    // log(myCat.firstname)
     log(myCat.lastname)
+
+
+
+    var Pig = new Class({
+        Extends: Animal,
+        initialize: function () {
+            this.parent();
+        }
+    })
+
+    var myPig = new Pig()
+    myPig.friends.push(33);
+    log(myPig.friends)
+
 
     function log() {
         console.log.apply(console, arguments)

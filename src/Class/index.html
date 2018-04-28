@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    Array.prototype.clone =  function(){
+        var i = this.length, cloneArray = new Array(i);
+        while (i--) cloneArray[i] = cloneOf(this[i]);
+        return cloneArray;
+    };
+
+
+    var arr = [1,2,3];
+    var arr1 = arr.clone(arr);
+    console.log(arr1);
+</script>
+</body>
+</html>
