@@ -154,7 +154,7 @@ var reset = function(object){
     return object;
 };
 
-// 这个函数在使用 Extends 中是一定会用到的
+// 这个函数在使用 只要新建 Class 是一定会用到的
 var wrap = function(self, key, method){
     // console.log(key)
     if (method.$origin) method = method.$origin;
@@ -162,14 +162,19 @@ var wrap = function(self, key, method){
         // 如果方法是是被保护的，或者这个方法没有 $caller ，就不能被调用
         if (method.$protected && this.$caller == null) throw new Error('The method "' + key + '" cannot be called.');
 
+        // 使用 Extends 继承后，在子类的函数中使用 this.parent(args)的时候，才会有 this.$caller
         var current = this.$caller;
-
-        if (this.$caller) {
-            console.log('this.$caller.$name is ' + this.$caller || 'no name');
+        if (current) {
+            console.log('this.$caller.$name is ' + current || 'no name');
         }
 
         this.$caller = wrapper; // method 的 $caller
-        // 将 method 绑定到当前wrapper对象中
+        // 这里的 this.$caller 是每个 class 中都有的，当用一个方法就有一个
+        // 当新建一个 Class 的时候，因为 initialize 函数是实例化类的时候就会执行
+        // 所以就不用像 myAnimal.setName 这种调用方法来执行了
+        // console.log(this.$caller.$name) // 这样就能够输出当前调用的方法名称了
+
+        // 将 method 绑定到当前 wrapper 对象中
         // 其实是为了设定 method 的 $caller 是 wrapper
         var result = method.apply(this, arguments);
 

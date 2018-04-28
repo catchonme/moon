@@ -12,21 +12,30 @@
         initialize: function(age){
             this.age = age;
         },
-
+        setName: function (name) {
+            this.name = name + ' after';
+        }
     });
 
     var myAnimal = new Animal(23);
     log(myAnimal.age)
+    myAnimal.setName('jack');
+    log(myAnimal.name)
 
     var Cat = new Class({
         Implements: Animal,
         initialize: function (age) {
             this.age = age + 33;
+        },
+        setName: function (name) {
+            this.name = name + ' really'
         }
     })
 
     var myCat = new Cat(23);
     log(myCat.age)
+    myCat.setName('wallen')
+    log(myCat.name)
 
     function log() {
         console.log.apply(console, arguments)
