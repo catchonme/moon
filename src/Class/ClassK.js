@@ -224,7 +224,7 @@ var wrap = function(self, key, method){
 
 // 为了将父类的的属性继承到子类，会使用中间变量，将父类传递给中间变量，再通过中间变量传递给子类
 var getInstance = function(klass){
-
+    // 获取父类在 initialize 中的属性
     var proto = new klass;
     return proto;
 };
@@ -243,26 +243,29 @@ Class.Mutators = {
     Extends: function(parent){
         // 指向当前类的父类是 parent 参数
         this.parent = parent;
-        // 使用 getInstance 得到父类的全部方法
+        // 使用 getInstance 得到父类的属性（initialize内部的）
+        console.log(getInstance(parent))
         this.prototype = getInstance(parent);
     },
     // 既然 Implements 只是把伪父类的 prototype 给当前类的 prototype，
-    // 那么为什么不直接使用 getInstance(items) 呢
+    // 不用 getInstance(items) 是因为 getInstance 只能把返回函数内部的属性
+    // for (var key in instance) 会遍历伪父类的属性和函数
     Implements: function(items){
+
         var afterItems = [items];
         afterItems.forEach(function(item){
             var instance = new item;
-            for (var key in instance) implement.call(this, key, instance[key], true);
+            for (var key in instance) {
+                console.log(key + '-------')
+                implement.call(this, key, instance[key], true);
+            }
         }, this);
     }
 };
 
-
-
 /*
- Extends 其实是分两部分，使用 Extends 的时候，是把父类的所有属性和方法，通过 getInstance 来附加到当前类中
- 然后当前类的方法中，可以使用 this.parent(args) 方法，来把父类的同名方法加载进来
+ Extends 其实是分两部分，使用 Extends 的时候，通过 getInstance 把父类中initialize中的属性来附加到当前类中,并指定子类的 parent ,
+ 然后子类的方法中，可以使用 this.parent(args) 方法，找到父类的同名方法，并执行
 
- Implements 方法中没有指代 this.parent = parent ，所以如果当前类写了和父类同名的方法，就会覆盖父类的方法
- Implements 只是给当前类添加更多的方法
+ Implements 将伪父类的方法，赋给伪子类的prototype中
  */
