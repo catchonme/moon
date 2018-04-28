@@ -154,35 +154,6 @@ var reset = function(object){
     return object;
 };
 
-var implement = function(key, value, retain){
-
-    // 使用 Extends 继承时, 调用 Mutators 中的 Extends 的方法
-    // 这时候设定当前类的父类，并将父类的prototype继承到当前类中
-    // 但是，我感觉这种调用方式好吗？
-    if (Class.Mutators.hasOwnProperty(key)){
-        // console.log(key) // Extends
-        // console.log(value) // newClass 函数
-        value = Class.Mutators[key].call(this, value);
-        if (value == null) {
-            return this;
-        }
-    }
-
-    // console.log('implement params ' + key)
-    // console.log('implement params value ' + value)
-    // this.prototype[key] = (retain) ? value : wrap(this, key, value);
-    // console.log('retain is ' + retain || 'retain is undefined') // undefined
-
-    /*
-     Extends 继承的时候，retain 是 false ,所以 wrap 函数
-        因为继承需要将父类的函数重新绑定上下文到子类中，所以需要 wrap
-     Implements 的时候，该函数为新函数的 prototype
-     */
-    this.prototype[key] = (retain) ? value : wrap(this, key, value);
-
-    return this;
-};
-
 // 这个函数在新建 Class 处理内部的函数
 // 在使用 Extends 的时候，需要改变子类的 $owner
 var wrap = function(self, key, method){
@@ -195,7 +166,7 @@ var wrap = function(self, key, method){
         // 使用 Extends 继承后，在子类的函数中使用 this.parent(args)的时候，才会有 this.$caller
         var current = this.$caller;
         if (current) {
-            console.log('this.$caller.$name is ' + current || 'no name');
+            console.log('this.$caller.$name is ' + current.$name || 'no name');
         }
 
         this.$caller = wrapper; // method 的 $caller
@@ -222,6 +193,32 @@ var wrap = function(self, key, method){
     return wrapper;
 };
 
+var implement = function(key, value){
+
+    // 使用 Extends 继承时, 调用 Muta
+    if (Class.Mutators.hasOwnProperty(key)){
+        // console.log(key) // Extends
+        // console.log(value) // newClass 函数
+        value = Class.Mutators[key].call(this, value);
+        if (value == null) {
+            return this;
+        }
+    }
+
+    // console.log('implement params ' + key)
+    // console.log('implement params value ' + value)
+    // this.prototype[key] = (retain) ? value : wrap(this, key, value);
+    // console.log('retain is ' + retain || 'retain is undefined') // undefined
+
+    /*
+     Extends 继承的时候，retain 是 false ,所以 wrap 函数
+     Implements 的时候，该函数为新函数的prototype
+     */
+    this.prototype[key] = wrap(this, key, value);
+
+    return this;
+};
+
 // 为了将父类的的属性继承到子类，会使用中间变量，将父类传递给中间变量，再通过中间变量传递给子类
 var getInstance = function(klass){
 
@@ -245,15 +242,6 @@ Class.Mutators = {
         this.parent = parent;
         // 使用 getInstance 得到父类的全部方法
         this.prototype = getInstance(parent);
-    },
-    // 既然 Implements 只是把伪父类的 prototype 给当前类的 prototype，
-    // 那么为什么不直接使用 getInstance(items) 呢
-    Implements: function(items){
-        var afterItems = [items];
-        afterItems.forEach(function(item){
-            var instance = new item;
-            for (var key in instance) implement.call(this, key, instance[key], true);
-        }, this);
     }
 };
 
