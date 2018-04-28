@@ -224,8 +224,9 @@ var wrap = function(self, key, method){
 
 // 为了将父类的的属性继承到子类，会使用中间变量，将父类传递给中间变量，再通过中间变量传递给子类
 var getInstance = function(klass){
-    // 获取父类在 initialize 中的属性
+    // 获取父类在 initialize 中的属性和函数
     var proto = new klass;
+    console.log(proto.setFri)
     return proto;
 };
 
@@ -235,6 +236,9 @@ var getInstance = function(klass){
 // 给 Class 增加 implement 方法，就是上面的 var implement，同时 implement 增加 overloadSetter
 // 也就是使用 Implements 时，是通过这里的 implement 把伪父类的prototype 赋给当前类的prototype中
 // 同时 overloadSetter 又可以把当前类的函数覆盖掉伪父类的函数
+
+// Class 是一个 function, Class.implement 中的 implement 是 Function.prototype.implement 这个方法
+//('implement', implement.overloadSetter()) 是给 Class 在增加一个 implement 方法，该方法的主体是 上面定义的 var implement
 Class.implement('implement', implement.overloadSetter());
 
 Class.Mutators = {
@@ -243,12 +247,12 @@ Class.Mutators = {
     Extends: function(parent){
         // 指向当前类的父类是 parent 参数
         this.parent = parent;
-        // 使用 getInstance 得到父类的属性（initialize内部的）
+        // 使用 getInstance 得到父类的属性（initialize内部的）和函数
         console.log(getInstance(parent))
         this.prototype = getInstance(parent);
     },
     // 既然 Implements 只是把伪父类的 prototype 给当前类的 prototype，
-    // 不用 getInstance(items) 是因为 getInstance 只能把返回函数内部的属性
+    // 不用 getInstance(items)，是因为伪父类的函数需要绑定到当前对象中（这里使用call函数）
     // for (var key in instance) 会遍历伪父类的属性和函数
     Implements: function(items){
 

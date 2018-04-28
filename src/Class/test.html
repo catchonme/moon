@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="ClassB.js"></script>
+</head>
+<body>
+<script>
+    var Animal = new Class({
+        initialize: function () {
+            this.age = 23;
+        },
+        setName: function(name) {
+            this.firstname = 'first ' + name;
+        }
+    })
+
+    var Cat = new Class({
+        Extends: Animal,
+        initialize: function () {
+            this.name = name;
+        },
+        setName: function(name){
+            this.parent(name)
+            this.lastname = 'last' + name
+        }
+    })
+
+    var myCat = new Cat();
+    log(myCat.lastname)
+
+    function log() {
+        console.log.apply(console, arguments)
+    }
+</script>
+</body>
+</html>

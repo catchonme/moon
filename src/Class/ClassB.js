@@ -154,6 +154,40 @@ var reset = function(object){
     return object;
 };
 
+var implement = function(key, value, retain){
+
+    // 使用 Extends 继承时, 调用 Mutators 中的 Extends 的方法
+    // 这时候设定当前类的父类，并将父类的prototype继承到当前类中
+    // 但是，我感觉这种调用方式好吗？
+    if (Class.Mutators.hasOwnProperty(key)){
+        // console.log(key) // Extends
+        // console.log(value) // newClass 函数
+        value = Class.Mutators[key].call(this, value);
+        if (value == null) {
+            return this;
+        }
+    }
+
+    /*if (key === 'Extends') {
+        this.parent = value;
+        this.prototype = getInstance(value)
+    }*/
+
+    // console.log('implement params ' + key)
+    // console.log('implement params value ' + value)
+    // this.prototype[key] = (retain) ? value : wrap(this, key, value);
+    // console.log('retain is ' + retain || 'retain is undefined') // undefined
+
+    /*
+     Extends 继承的时候，retain 是 false ,所以 wrap 函数
+        因为继承需要将父类的函数重新绑定上下文到子类中，所以需要 wrap
+     Implements 的时候，该函数为新函数的 prototype
+     */
+    this.prototype[key] = (retain) ? value : wrap(this, key, value);
+
+    return this;
+};
+
 // 这个函数在新建 Class 处理内部的函数
 // 在使用 Extends 的时候，需要改变子类的 $owner
 var wrap = function(self, key, method){
@@ -166,7 +200,7 @@ var wrap = function(self, key, method){
         // 使用 Extends 继承后，在子类的函数中使用 this.parent(args)的时候，才会有 this.$caller
         var current = this.$caller;
         if (current) {
-            console.log('this.$caller.$name is ' + current.$name || 'no name');
+            console.log('this.$caller.$name is ' + current || 'no name');
         }
 
         this.$caller = wrapper; // method 的 $caller
@@ -193,36 +227,11 @@ var wrap = function(self, key, method){
     return wrapper;
 };
 
-var implement = function(key, value){
-
-    // 使用 Extends 继承时, 调用 Muta
-    if (Class.Mutators.hasOwnProperty(key)){
-        // console.log(key) // Extends
-        // console.log(value) // newClass 函数
-        value = Class.Mutators[key].call(this, value);
-        if (value == null) {
-            return this;
-        }
-    }
-
-    // console.log('implement params ' + key)
-    // console.log('implement params value ' + value)
-    // this.prototype[key] = (retain) ? value : wrap(this, key, value);
-    // console.log('retain is ' + retain || 'retain is undefined') // undefined
-
-    /*
-     Extends 继承的时候，retain 是 false ,所以 wrap 函数
-     Implements 的时候，该函数为新函数的prototype
-     */
-    this.prototype[key] = wrap(this, key, value);
-
-    return this;
-};
-
 // 为了将父类的的属性继承到子类，会使用中间变量，将父类传递给中间变量，再通过中间变量传递给子类
 var getInstance = function(klass){
-
+    // 获取父类在 initialize 中的属性和函数
     var proto = new klass;
+    console.log(proto.setFri)
     return proto;
 };
 
@@ -232,6 +241,9 @@ var getInstance = function(klass){
 // 给 Class 增加 implement 方法，就是上面的 var implement，同时 implement 增加 overloadSetter
 // 也就是使用 Implements 时，是通过这里的 implement 把伪父类的prototype 赋给当前类的prototype中
 // 同时 overloadSetter 又可以把当前类的函数覆盖掉伪父类的函数
+
+// Class 是一个 function, Class.implement 中的 implement 是 Function.prototype.implement 这个方法
+//'implement', implement.overloadSetter() 是给 Class 在增加一个 implement 方法，该方法的主体是 上面定义的 var implement
 Class.implement('implement', implement.overloadSetter());
 
 Class.Mutators = {
@@ -240,17 +252,29 @@ Class.Mutators = {
     Extends: function(parent){
         // 指向当前类的父类是 parent 参数
         this.parent = parent;
-        // 使用 getInstance 得到父类的全部方法
+        // 使用 getInstance 得到父类的属性（initialize内部的）
+        // console.log(getInstance(parent))
         this.prototype = getInstance(parent);
+    },
+    // 既然 Implements 只是把伪父类的 prototype 给当前类的 prototype，
+    // 不用 getInstance(items) 是因为 getInstance 只能把返回initialize函数内部的属性
+    // for (var key in instance) 会遍历伪父类的属性和函数
+    Implements: function(items){
+
+        var afterItems = [items];
+        afterItems.forEach(function(item){
+            var instance = new item;
+            for (var key in instance) {
+                console.log(key + '-------')
+                implement.call(this, key, instance[key], true);
+            }
+        }, this);
     }
 };
 
-
-
 /*
- Extends 其实是分两部分，使用 Extends 的时候，是把父类的所有属性和方法，通过 getInstance 来附加到当前类中
- 然后当前类的方法中，可以使用 this.parent(args) 方法，来把父类的同名方法加载进来
+ Extends 其实是分两部分，使用 Extends 的时候，通过 getInstance 把父类中initialize中的属性来附加到当前类中,并指定子类的 parent ,
+ 然后子类的方法中，可以使用 this.parent(args) 方法，找到父类的同名方法，并执行
 
- Implements 方法中没有指代 this.parent = parent ，所以如果当前类写了和父类同名的方法，就会覆盖父类的方法
- Implements 只是给当前类添加更多的方法
+ Implements 将伪父类的方法，赋给伪子类的prototype中
  */
