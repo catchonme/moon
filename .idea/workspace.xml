@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="855f5175-0cb8-4db3-9b06-f872796fde47" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/Class/Class.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/Class/ClassB.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/Class/ClassH.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/src/Class/ClassK.js" afterPath="$PROJECT_DIR$/src/Class/ClassK.js" />
-      <change beforePath="$PROJECT_DIR$/src/Class/index.html" afterPath="$PROJECT_DIR$/src/Class/index.html" />
-      <change beforePath="$PROJECT_DIR$/src/Class/test.html" afterPath="$PROJECT_DIR$/src/Class/test.html" />
-    </list>
+    <list default="true" id="855f5175-0cb8-4db3-9b06-f872796fde47" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -19,6 +11,26 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DockManager">
+    <window id="4">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="class.js" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/lang/class.js">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="-279">
+                    <caret line="42" column="58" lean-forward="true" selection-start-line="42" selection-start-column="58" selection-end-line="42" selection-end-column="58" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -55,56 +67,22 @@
       <file leaf-file-name="ClassK.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Class/ClassK.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-8">
-              <caret line="23" column="26" lean-forward="false" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+            <state relative-caret-position="23">
+              <caret line="24" column="35" lean-forward="true" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClassD.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Class/ClassD.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="173" column="12" lean-forward="false" selection-start-line="173" selection-start-column="6" selection-end-line="173" selection-end-column="12" />
-              <folding>
-                <element signature="e#41#604#0" expanded="false" />
-                <element signature="e#652#919#0" expanded="false" />
-                <element signature="e#971#997#0" expanded="false" />
-                <element signature="e#1144#1311#0" expanded="false" />
-                <element signature="e#1703#2066#0" expanded="false" />
-                <element signature="e#2105#2252#0" expanded="false" />
-                <element signature="e#2310#2806#0" expanded="false" />
-                <element signature="e#2854#3187#0" expanded="false" />
-                <element signature="e#3219#3616#0" expanded="false" />
-                <element signature="e#3664#4011#0" expanded="false" />
-                <element signature="e#4037#4400#0" expanded="false" />
-                <element signature="e#4963#5011#0" expanded="false" />
-                <element signature="e#5089#5499#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Class/README.md">
+        <entry file="file://$PROJECT_DIR$/src/lang/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="279">
-                <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+              <first_editor relative-caret-position="217">
+                <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
                 <folding />
               </first_editor>
               <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="class.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lang/class.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-8">
-              <caret line="102" column="0" lean-forward="false" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -142,7 +120,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Type</find>
       <find>typeOf</find>
       <find>function.</find>
       <find>hide</find>
@@ -171,6 +148,7 @@
       <find>overloadSetter</find>
       <find>megerOne</find>
       <find>mergerOne</find>
+      <find>argumentNames</find>
       <find>extend</find>
     </findStrings>
     <replaceStrings>
@@ -212,6 +190,7 @@
         <option value="$PROJECT_DIR$/src/Class/main.html" />
         <option value="$PROJECT_DIR$/src/Class/ClassD.js" />
         <option value="$PROJECT_DIR$/src/Class/README.md" />
+        <option value="$PROJECT_DIR$/src/lang/README.md" />
       </list>
     </option>
   </component>
@@ -342,18 +321,18 @@
       <workItem from="1524702278587" duration="15163000" />
       <workItem from="1524725265079" duration="1989000" />
       <workItem from="1524784284161" duration="10896000" />
-      <workItem from="1524872614218" duration="30121000" />
+      <workItem from="1524872614218" duration="31130000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86768000" />
+    <option name="totallyTimeSpent" value="87777000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16180556" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298611" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -402,13 +381,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/demo/template.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lang/object.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4371">
@@ -704,11 +676,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lang/class.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="102" column="0" lean-forward="false" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
-          <folding />
+    <entry file="file://$PROJECT_DIR$/src/Class/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="279">
+            <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+            <folding />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
@@ -736,17 +711,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Class/ClassK.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8">
-          <caret line="23" column="26" lean-forward="false" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+        <state relative-caret-position="23">
+          <caret line="24" column="35" lean-forward="true" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Class/README.md">
+    <entry file="file://$PROJECT_DIR$/src/lang/class.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-279">
+          <caret line="42" column="58" lean-forward="true" selection-start-line="42" selection-start-column="58" selection-end-line="42" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lang/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="279">
-            <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <first_editor relative-caret-position="217">
+            <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
             <folding />
           </first_editor>
           <second_editor />
