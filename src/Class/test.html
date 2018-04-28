@@ -13,10 +13,10 @@
         initialize: function () {
             this.age = 23;
             this.friends = [11];
+            this.family = {
+                name: 'wall22'
+            }
         },
-        setName: function(name) {
-            this.firstname = 'first ' + name;
-        }
     })
 
     var myAnimal = new Animal()
@@ -28,6 +28,9 @@
         initialize: function (name) {
             // this.parent()
             this.name = name;
+            this.family = {
+                age: 'family age'
+            }
         },
         setName: function(name){
             // this.parent(name)
@@ -35,19 +38,15 @@
         }
     })
 
+    Cat.implement({
+        setName: function () {
+            console.log(3333333)
+        }
+    })
+
     var myCat = new Cat('jack name');
-    log(myCat.name);
-    log(myCat.age);
-    myCat.friends.push(22);
-    var _toString = Object.prototype.toString
-    // log(_toString.call(myCat.friends))
-    log(myCat.friends)
-
-    myCat.setName('jack')
-    // log(myCat.firstname)
-    log(myCat.lastname)
-
-
+    myCat.setName();
+    log(myCat.family)
 
     var Pig = new Class({
         Extends: Animal,

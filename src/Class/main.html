@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="ClassD.js"></script>
+    <!--<script src="ClassK.js"></script>-->
+</head>
+<body>
+<script>
+    var Animal = new Class({
+        initialize: function (name, age) {
+            this.name = name;
+            this.age = age;
+            this.friends = [11]
+        },
+        sayName: function() {
+            console.log('my animal name is ' + this.name);
+        }
+    })
+
+    Animal.implement({
+        sayAge: function () {
+            console.log(this.age)
+        }
+    })
+
+    var myAnimal = new Animal('Micia', 23);
+    log('my animal age is ' + myAnimal.age);
+    myAnimal.sayName()
+    myAnimal.sayAge()
+
+    var Cat = new Class({
+        Extends: Animal,
+        initialize: function (name, age, addr) {
+            this.name = name;
+            this.addr = addr;
+        },
+        sayName: function () {
+
+            console.log('cat name is ' + this.name)
+        }
+    })
+
+    var myCat = new Cat('cat', 11, 'beijing');
+    myCat.sayName();
+    myCat.friends.push(22);
+    log(myCat.friends)
+
+    var Pig = new Class({
+        Extends: Animal,
+    })
+
+    Pig.implement({
+        sayMe: function () {
+            console.log('this is pig')
+        }
+    })
+
+    var myPig = new Pig();
+
+
+    myPig.friends.push(33);
+    log(myPig.friends)
+    myPig.sayMe()
+
+    function log() {
+        console.log.apply(console, arguments);
+    }
+</script>
+</body>
+</html>

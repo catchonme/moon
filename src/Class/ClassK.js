@@ -6,19 +6,18 @@
 
 var class2Type = function (object) {
     var _toString = Object.prototype.toString;
-    var type = _toString.call(object);
-    var afterType = '';
-    switch (type) {
-        case '[object String]': afterType = 'string';break;
-        case '[object Number]': afterType = 'number';break;
-        case '[object Object]': afterType = 'object';break;
-        case '[object Array]': afterType = 'array';break;
-        case '[object Null]': afterType = 'null';break;
-        case '[object Undefined]': afterType = 'undefined';break;
+    var classType = _toString.call(object);
+    var type = '';
+    switch (classType) {
+        case '[object String]': type = 'string';break;
+        case '[object Number]': type = 'number';break;
+        case '[object Object]': type = 'object';break;
+        case '[object Array]': type = 'array';break;
+        case '[object Null]': type = 'null';break;
+        case '[object Undefined]': type = 'undefined';break;
     }
-    return afterType;
+    return type;
 }
-
 
 Function.prototype.overloadSetter = function(usePlural){
     var self = this;
@@ -69,7 +68,6 @@ Array.implement('clone', function(){
     return clone;
 });
 
-var _toString = Object.prototype.toString
 var mergeOne = function(source, key, current){
     switch (class2Type(current)){
         case 'object':
@@ -159,7 +157,7 @@ var parent = function(){
 var reset = function(object){
     for (var key in object){
         var value = object[key];
-        switch (_toString.call(value)){
+        switch (class2Type(value)){
             case 'object':
                 var F = function(){};
                 F.prototype = value;
@@ -174,11 +172,9 @@ var reset = function(object){
 var implement = function(key, value, retain){
 
     // 使用 Extends 继承时, 调用 Mutators 中的 Extends 的方法
-    // 这时候设定当前类的父类，并将父类的prototype继承到当前类中
+    // 这时候设定当前类的父类，并将父类的 prototype 继承到当前类中
     // 但是，我感觉这种调用方式好吗？
     if (Class.Mutators.hasOwnProperty(key)){
-        // console.log(key) // Extends
-        // console.log(value) // newClass 函数
         value = Class.Mutators[key].call(this, value);
         if (value == null) {
             return this;
@@ -198,13 +194,7 @@ var implement = function(key, value, retain){
     if (typeof value == 'function') {
         this.prototype[key] = (retain) ? value : wrap(this, key, value);
     } else {
-        /*if (key == 'friends') {
-            console.log(Array.isArray(value))
-            console.log(value);
-            this.prototype.friends = value.clone()
-        } else {
-            this.prototype[key] = value
-        }*/
+        // 主要对 Array, Object 深复制，修改子类的中继承自父类的 Array, Object 不会影响父类
         Object.merge(this.prototype, key, value)
     }
 

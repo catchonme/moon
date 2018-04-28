@@ -6,16 +6,21 @@
 </head>
 <body>
 <script>
-    Array.prototype.clone =  function(){
-        var i = this.length, cloneArray = new Array(i);
-        while (i--) cloneArray[i] = cloneOf(this[i]);
-        return cloneArray;
-    };
+    var class2type = {},
+        toString = class2type.toString;
+    function type(obj) {
+        return obj == null ? String(obj) :
+            class2type[toString.call(obj)] || "object"
+    }
+    "Boolean Number String Function Array Date RegExp Object Error".split(" ").forEach(function(name) {
+        class2type[ "[object " + name + "]" ] = name.toLowerCase()
+    })
 
-
-    var arr = [1,2,3];
-    var arr1 = arr.clone(arr);
-    console.log(arr1);
+    var type = type(123)
+    log(type)
+    function log() {
+        console.log.apply(console, arguments)
+    }
 </script>
 </body>
 </html>
