@@ -88,7 +88,7 @@ Object.extend({
 })
 
 /* class 主体 */
-// 新建一个 Class 的类，new Type 也是一个函数
+// 新建一个 Class 的类
 var Class = function(params){
 
     var newClass = function(){
@@ -99,14 +99,13 @@ var Class = function(params){
         // 有初始化函数的话，就传入参数到该初始化函数并执行，没有就返回自身
         var value = (this.initialize) ? this.initialize.apply(this, arguments) : this;
 
-        console.log(this.$caller);
         this.$caller = null;
         return value;
         // 新生成的函数 newClass 与 this 绑定，
         // implement(params) 把 params 的所有方法都添加到当前类中
     }.extend(this).implement(params);
 
-    // 指定当前类的父类是哪一个
+    // 给当前类增加一个原型方法 parent ，这样在当前类的函数中，可以使用 this.parent(args) 来调用父类的方法
     newClass.prototype.parent = parent;
 
     return newClass;
@@ -116,8 +115,9 @@ var Class = function(params){
 	在子类拥有和父类同名方法时，使用 this.parent(args) 方法来调用父类的该方法
  */
 var parent = function(){
-    // 如果当前方法没有被调用，那么就说，parent 方法没有被调用
-    // 子类在函数中使用 this.parent(args) ，但是父类没有这个函数的同名函数
+
+    // this.$caller 在 wrap 函数中被赋值，如果没有 this.$caller ，也就是没有经过 wrap 函数
+    // 这个检测抛错，其实也是为了防止下面的 this.$caller.$name 抛出错误
     if (!this.$caller) throw new Error('The method "parent" cannot be called.');
 
     // console.log(this.$caller) // wrap 里面的 wrapper 函数
@@ -129,8 +129,11 @@ var parent = function(){
         // 得到父类相同名字的方法
         previous = (parent) ? parent.prototype[name] : null;
     // console.log(name)
+    // 子类在函数中使用 this.parent(args) ，但是父类没有这个函数的同名函数
     if (!previous) throw new Error('The method "' + name + '" has no parent.');
-    // 父类的该同名函数，添加到当前子类中
+    // 父类函数使用apply绑定在子类的上下文中，并执行
+    // 什么时候会执行当前函数呢，在子类的函数中，如果父类有同名函数，使用 this.parent(args)
+    // 因为在 var Class 的函数中，就已经指定了 当前函数为 Class.prototype.parent
     return previous.apply(this, arguments);
 };
 
@@ -151,7 +154,7 @@ var reset = function(object){
     return object;
 };
 
-// 这个函数是一定会用到的
+// 这个函数在使用 Extends 中是一定会用到的
 var wrap = function(self, key, method){
     // console.log(key)
     if (method.$origin) method = method.$origin;
@@ -162,16 +165,20 @@ var wrap = function(self, key, method){
         var current = this.$caller;
 
         if (this.$caller) {
-            // console.log('this.$caller.$name is ' + this.$caller.$name || 'no name');
+            console.log('this.$caller.$name is ' + this.$caller || 'no name');
         }
 
         this.$caller = wrapper; // method 的 $caller
-        // 将 method 绑定到当前对象中
+        // 将 method 绑定到当前wrapper对象中
+        // 其实是为了设定 method 的 $caller 是 wrapper
         var result = method.apply(this, arguments);
 
         this.$caller = current; // wrapper 的 $caller
         return result;
         // 通过extend ,$owner, $origin, $name 加到 wrapper 函数的属性中去
+        // 这里其实修改了原有的 method , 所以使用 $origin 来保存原有的 method
+        // $name 保存 method 的 key 是用来在继承的父类中查找相同名字的函数
+        // $owner 保存 子类的 this 是他来找到子类的 parent -> (this.$caller.$owner.parent)
         // 这样就能在 parent 中使用 this.$caller.$name，this.$caller.$owner.parent 中是使用了
     }.extend({$owner: self, $origin: method, $name: key});
     // console.log(wrapper.$owner)
