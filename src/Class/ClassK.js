@@ -154,7 +154,8 @@ var reset = function(object){
     return object;
 };
 
-// 这个函数在使用 只要新建 Class 是一定会用到的
+// 这个函数在新建 Class 处理内部的函数
+// 在使用 Extends 的时候，需要改变子类的 $owner
 var wrap = function(self, key, method){
     // console.log(key)
     if (method.$origin) method = method.$origin;
@@ -173,6 +174,7 @@ var wrap = function(self, key, method){
         // 当新建一个 Class 的时候，因为 initialize 函数是实例化类的时候就会执行
         // 所以就不用像 myAnimal.setName 这种调用方法来执行了
         // console.log(this.$caller.$name) // 这样就能够输出当前调用的方法名称了
+        // 为什么在新建 Class 中就有 this.$caller 呢，是因为在 var Class  中有 implement(params)
 
         // 将 method 绑定到当前 wrapper 对象中
         // 其实是为了设定 method 的 $caller 是 wrapper
@@ -182,8 +184,9 @@ var wrap = function(self, key, method){
         return result;
         // 通过extend ,$owner, $origin, $name 加到 wrapper 函数的属性中去
         // 这里其实修改了原有的 method , 所以使用 $origin 来保存原有的 method
+        // 这样在 Extends 的时候，子类其实还是需要调用父类的 method 的，这时候通过 apply 改变执行环境的上下文
         // $name 保存 method 的 key 是用来在继承的父类中查找相同名字的函数
-        // $owner 保存 子类的 this 是他来找到子类的 parent -> (this.$caller.$owner.parent)
+        // $owner 保存子类的 this 是他来找到子类的 parent -> (this.$caller.$owner.parent)
         // 这样就能在 parent 中使用 this.$caller.$name，this.$caller.$owner.parent 中是使用了
     }.extend({$owner: self, $origin: method, $name: key});
     // console.log(wrapper.$owner)
@@ -223,7 +226,12 @@ var getInstance = function(klass){
     return proto;
 };
 
+// Extends 是继承，有父类， Implements 称作伪父类吧
+
 // 这里有 overloadSetter ，所以，可能是 Class.implement 方法，来给类额外添加函数的
+// 给 Class 增加 implement 方法，就是上面的 var implement，同时 implement 增加 overloadSetter
+// 也就是使用 Implements 时，是通过这里的 implement 把伪父类的prototype 赋给当前类的prototype中
+// 同时 overloadSetter 又可以把当前类的函数覆盖掉伪父类的函数
 Class.implement('implement', implement.overloadSetter());
 
 Class.Mutators = {
