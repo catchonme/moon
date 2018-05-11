@@ -212,9 +212,6 @@ var wrap = function(self, key, method){
 
         // 使用 Extends 继承后，在子类的函数中使用 this.parent(args)的时候，才会有 this.$caller
         var current = this.$caller;
-        if (current) {
-            console.log('this.$caller.$name is ' + current.$name || 'no name');
-        }
 
         this.$caller = wrapper; // method 的 $caller
         // 这里的 this.$caller 是每个 class 中都有的，当用一个方法就有一个

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="zepto.js"></script>
+</head>
+<body>
+<p id="person">
+    <span>label span</span>
+</p>
+<span>label span without p</span>
+</body>
+<script>
+    var span = $("span");
+    log(span);
+
+
+    function log() {
+        console.log.apply(console, arguments);
+    }
+</script>
+</html>

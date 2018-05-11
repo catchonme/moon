@@ -9,37 +9,25 @@
 <script>
 
     var Animal = new Class({
-        initialize: function(age){
-            this.age = age;
-            this.params = 'parmas'
-        },
-        setFri: function (name) {
-            this.fir = name + ' after';
-        }
-    });
-
-    var myAnimal = new Animal(23);
-    log(myAnimal.age)
-    /*myAnimal.setName('jack');
-    log(myAnimal.name)*/
-
-    var Cat = new Class({
-        Extends: Animal,
-        initialize: function (age) {
-            this.age = age + 33;
-        },
-        setName: function (name) {
-            this.name = name + ' really'
+        initialize: function (name) {
+            this.name = name;
         }
     })
 
-    var myCat = new Cat(23);
-    log(myCat.age)
-    log(myCat.params)
-    myCat.setName('wallen')
-    log(myCat.name)
-    myCat.setFri('woo');
-    // log(myCat.prototype)
+    var myAnimal = new Animal('jack');
+    console.log(myAnimal.name);
+
+    var Cat = new Class({
+        Extends: Animal,
+        initialize: function (name, age) {
+            this.parent(name);
+            this.age = age;
+        }
+    })
+
+    var myCat = new Cat('mia', 13);
+    console.log(myCat.name);
+    console.log(myCat.age);
 
     function log() {
         console.log.apply(console, arguments)
