@@ -80,5 +80,23 @@
             (docElement.scrollTop || body.scrollTop) -
             (docElement.clientTop || 0));
     }
+
     // 用户自定义事件绑定
+    /**
+     * 利用原生 API 实现自定义绑定
+     * 来源 https://github.com/nefe/You-Dont-Need-jQuery/blob/master/README.zh-CN.md#events
+     * API https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent
+     */
+    if (window.CustomEvent) {
+        const event = new CustomEvent('custom-event', {detail: {key1: 'data'}});
+    } else {
+        const event = document.createEvent('CustomEvent');
+        event.initCustomEvent('custom-event', true, true, {key1: 'data'});
+    }
+    // 触发
+    el.dispatchEvent(event);
+
+    /**
+     * 
+     */
 })()

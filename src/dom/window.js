@@ -69,6 +69,7 @@
                 if (!done && (done = true)) fn.call(win, e.type || e);
             },
 
+            // IE 的检测方法
             poll = function() {
                 try { root.doScroll('left'); } catch (e) { setTimeout( poll, 50); return; }
                 init('poll');
@@ -88,5 +89,16 @@
             doc[add](pre + 'readystatechange', init, false);
             win[add](pre + 'load', init, false)
         }
+    }
+
+
+    /**
+     * 检测 DOMContentLoaded 是否已完成
+     * https://github.com/nefe/You-Dont-Need-jQuery/blob/master/README.zh-CN.md#events
+     */
+    if (document.readyState !== 'loading') {
+        eventHandler()
+    } else {
+        document.addEventListener('DOMContentLoaded', eventHanlder);
     }
 })()
