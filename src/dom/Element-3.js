@@ -44,3 +44,14 @@ function type(item) {
         .replace(reTypeOf, '$1')
         .toLowerCase();
 }
+
+/**
+ * 全局执行 JavaScript 代码
+ * 或者使用 eval(code)
+ */
+function Globaleval(code) {
+    const script = document.createElement('script');
+    script.text = code;
+
+    document.head.appendChild(script).parentNode.removeChild(script);
+}
