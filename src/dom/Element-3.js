@@ -34,3 +34,13 @@ function isPlainObject(obj) {
 
     return true;
 }
+
+/**
+ * 检测对象的 JavaScript [Class] 内部类型
+ */
+function type(item) {
+    const reTypeOf = /(?:^\[object\s(.*?)\]$)/;
+    return Object.prototype.toString.call(item)
+        .replace(reTypeOf, '$1')
+        .toLowerCase();
+}
