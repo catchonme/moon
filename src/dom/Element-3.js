@@ -18,3 +18,19 @@ function isFunction(item) {
     var type = Object.prototype.toString(item);
     return type === '[object Function]' || type === '[object GeneratorFunction]';
 }
+
+/**
+ * 检测是不是扁平对象（使用 "{}" 或 "new Object" 创建)
+ */
+function isPlainObject(obj) {
+    if (typeof (obj) !== 'object' || obj.nodeType || obj !== null && obj !== undefined && obj === obj.window) {
+        return false;
+    }
+
+    if (obj.constructor &&
+        !Object.prototype.hasOwnProperty.call(obj.constructor.prototype, 'isPrototypeOf')) {
+        return false;
+    }
+
+    return true;
+}
