@@ -88,4 +88,13 @@
     }
 
 
+    /**
+     * 创建 Element
+     * https://github.com/nefe/You-Dont-Need-jQuery/blob/master/README.zh-CN.md#dom-manipulation
+     */
+    function parseFloat(element) {
+        var range = document.createRange();
+        var parse = range.createContextualFragment(range);
+        parse(`element`);
+    }
 })()
